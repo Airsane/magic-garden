@@ -10,7 +10,7 @@ import { S, type Tab } from "./config";
 import type { GameSnapshot } from "./game/reader";
 
 const emptyGame = (): GameSnapshot => ({
-  tiles: null, coins: null, cropInv: null, cropItems: [], favorites: new Set(), seeds: {}, owned: null, pets: null,
+  tiles: null, coins: null, cropInv: null, cropItems: [], favorites: new Set(), seeds: {}, owned: null, pets: null, players: 1,
 });
 
 export const state = {

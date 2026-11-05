@@ -2,6 +2,7 @@
 
 import { readAtom } from "./store";
 import { readPets, type Pet } from "./pets";
+import { clampPlayers } from "./pricing";
 import type { Tiles } from "./garden";
 
 /** Plodina v batohu. */
@@ -26,6 +27,8 @@ export interface GameSnapshot {
   /** indexy políček hlíny, která patří hráči (null = mapa ještě není načtená) */
   owned: number[] | null;
   pets: Pet[] | null;
+  /** hráčů v místnosti 1–6 (bonus za přátele) */
+  players: number;
 }
 
 interface MyData {
@@ -57,7 +60,7 @@ function ownedDirtTiles(map: GameMap | undefined, slotIdx: number): number[] | n
 }
 
 export async function readGame(): Promise<GameSnapshot> {
-  const [data, crops, seeds, map, slotIdx, inv, petsA, petsB] = await Promise.all([
+  const [data, crops, seeds, map, slotIdx, inv, petsA, petsB, players] = await Promise.all([
     readAtom<MyData>("myDataAtom"),
     readAtom<CropItem[]>("myCropInventoryAtom"),
     readAtom<RawSeed[]>("mySeedInventoryAtom"),
@@ -66,6 +69,7 @@ export async function readGame(): Promise<GameSnapshot> {
     readAtom<Inventory>("myInventoryAtom"),
     readAtom<unknown>("myPredictedPetSlotsAtom"),
     readAtom<unknown>("myPrimitivePetSlotsAtom"),
+    readAtom<number>("numPlayersAtom"),
   ]);
   const coins = Number(data?.coinsCount ?? data?.coins);
   const seedMap: Record<string, number> = {};
@@ -83,5 +87,6 @@ export async function readGame(): Promise<GameSnapshot> {
     seeds: seedMap,
     owned: ownedDirtTiles(map, Number(slotIdx)),
     pets: readPets(Array.isArray(petsA) ? petsA : petsB),
+    players: clampPlayers(players),
   };
 }
