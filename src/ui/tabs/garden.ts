@@ -1,8 +1,9 @@
 // Záložka "Zahrada": mapa políček a stav podle druhu.
 
-import type { GardenSummary, TileObject } from "../../game/garden";
+import { harvestable, type GardenSummary, type TileObject } from "../../game/garden";
+import { gardenValue } from "../../game/value";
 import { state } from "../../state";
-import { dur, esc, fmt } from "../../util/format";
+import { dur, esc, fmt, fmtShort } from "../../util/format";
 import type { TabView } from "../tab";
 import { row, tile } from "../templates";
 
@@ -40,6 +41,7 @@ function gardenHTML(sum: GardenSummary | null): string {
   for (let i = 0; i < count; i++) cells.push(cellHTML(i, tiles[i], ownedSet, t));
 
   const species = Object.entries(sum.bySpecies).sort((a, b) => b[1].ripe + b[1].growing - (a[1].ripe + a[1].growing));
+  const value = gardenValue(tiles, game.players, t, harvestable);
   const pct = sum.crops ? Math.round((sum.ripe / sum.crops) * 100) : 0;
   return `
       <div class="grid">
@@ -59,8 +61,13 @@ function gardenHTML(sum: GardenSummary | null): string {
       ${row("Dozraje do 5 min", fmt(sum.soon))}
       ${row("Zralé s mutací", fmt(sum.mutatedRipe))}
       ${row("Volná políčka", sum.empty != null ? fmt(sum.empty) : "?")}
-      <h4>Podle druhu · zralé / roste</h4>
-      ${species.length ? species.map(([k, v]) => row(esc(k), `${v.ripe} / ${v.growing}`)).join("") : `<div class="muted">Prázdná zahrada</div>`}`;
+      <h4>Hodnota</h4>
+      ${row("Zralé teď", fmtShort(value.ripe))}
+      ${row("Podle filtrů sklizně", fmtShort(value.eligible))}
+      ${row("Celé pole (i rostoucí)", fmtShort(value.total))}
+      ${row("Bonus za hráče", `+${(game.players - 1) * 10} %`)}
+      <h4>Podle druhu · zralé / roste · hodnota</h4>
+      ${species.length ? species.map(([k, v]) => row(esc(k), `${v.ripe} / ${v.growing} · ${fmtShort(value.bySpecies[k]?.total)}`)).join("") : `<div class="muted">Prázdná zahrada</div>`}`;
 }
 
 export const gardenTab: TabView = {

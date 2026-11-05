@@ -1,7 +1,8 @@
 # Magic Garden – Auto Farm
 
 Tampermonkey userscript pro [Magic Garden](https://magicgarden.gg): automatická sklizeň,
-sázení a krmení mazlíčků, mapa zahrady, statistiky a upozornění. Ovládá se plovoucím
+sázení a krmení mazlíčků, mapa zahrady, hodnota pole, kalkulačka zisku, statistiky
+a upozornění. Ovládá se plovoucím
 panelem ve hře (**Alt+H** ho skryje / zobrazí).
 
 > ⚠️ Nekombinuj s Arie's Mod – oba přečíslovávají příkazy na stejném socketu.
@@ -76,6 +77,7 @@ scripts/
   build.mjs              esbuild: src/main.ts → dist/mg-autoharvest.user.js
   meta.mjs               hlavička ==UserScript==
   check-cycles.mjs       kontrola cyklických importů
+  update-catalog.mjs     obnovení katalogu rostlin a mutací z API
 src/
   main.ts                start: hook socketu → anti-AFK → UI → časovač
   config.ts              nastavení (typy, výchozí hodnoty, localStorage)
@@ -89,11 +91,18 @@ src/
     commands.ts          herní příkazy (HarvestCrop, PlantSeed, FeedPet, SellAllCrops)
     keepalive.ts         držení spojení na pozadí (anti-AFK)
     visibility.ts        skutečná viditelnost záložky, důvod odpojení
+  data/
+    catalog.ts           katalog rostlin a mutací (ceny, velikost, sklizeň)
+    catalog-data.json    snímek katalogu (generuje update-catalog.mjs)
   game/
     store.ts             nalezení jotai store hry, readAtom()
     reader.ts            readGame() – snímek stavu hry z atomů
     garden.ts            plody, zralost, filtry sklizně, souhrn zahrady
     pets.ts              katalog mazlíčků, převod dat mazlíčků
+    pricing.ts           cena plodu (velikost, mutace, bonus za hráče)
+    value.ts             hodnota pole a batohu
+    growtimes.ts         doby růstu naučené ze zahrady
+    profit.ts            zisk z pěstování, žebříček plodin
   farm/
     loop.ts              hlavní kolo (sklizeň → krmení → prodej → sázení), časovač
     harvest.ts           sklizeň
@@ -102,11 +111,13 @@ src/
   ui/
     panel.ts             kostra panelu, přepínače, záložky, vykreslování, tick
     tab.ts               rozhraní záložky (TabView)
-    tabs/*.ts            jednotlivé záložky (Přehled, Zahrada, Sklizeň, Sázení, Mazlíčci, Log)
+    tabs/*.ts            jednotlivé záložky (Přehled, Zahrada, Sklizeň, Sázení, Mazlíčci, Kalkulačka, Log)
+    calc/state.ts        stav kalkulačky a převod na vstup výpočtu zisku
     fields.ts            navázání formulářů (data-k, data-run) na nastavení
     chips.ts             klikací štítky druhů
     templates.ts         HTML šablony (row, tile, bars, spark…)
     styles.css           styly panelu
+test/                    testy čisté logiky (vitest)
 ```
 
 Jak to funguje uvnitř (protokol, jotai store, pravidla mezi moduly, jak přidat

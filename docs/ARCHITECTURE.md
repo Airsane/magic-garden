@@ -66,11 +66,42 @@ hledají podle `debugLabel` v `window.jotaiAtomCache`:
 | `mapAtom` + `myUserSlotIdxAtom` | která políčka hlíny patří hráči |
 | `myPredictedPetSlotsAtom` / `myPrimitivePetSlotsAtom` | aktivní mazlíčci |
 | `positionAtom` | pozice hráče (anti-AFK) |
+| `numPlayersAtom` | počet hráčů (bonus za přátele) |
 
 Tvar dat se může s verzí hry měnit, proto jsou typy v `game/*.ts` „volné“
 (všechna pole volitelná) a čtení je všude defenzivní. Když hra něco přejmenuje,
 oprava patří do `game/reader.ts` / `game/pets.ts`, zbytek kódu pracuje už jen
 s normalizovanými typy `Crop`, `Pet` a `GameSnapshot`.
+
+## Ceny a kalkulačka
+
+Cena plodu (`game/pricing.ts`) počítá stejně jako hra:
+
+```
+cena = round( baseSellPrice × velikost × mutace × přátelé )
+velikost = 1 + (maxSizeMultiplier − 1) × (size − 50) / 50      size 50–100
+mutace   = barva × (počasí + světlo − počet_přítomných + 1)
+           barva  = nejlepší ze skupiny Growth (Gold 25, Rainbow 50)
+           počasí = nejlepší z Hydro; Wet + Chilled zároveň = Frozen
+           světlo = nejlepší z Lunar
+přátelé  = 1 + 0,1 × (hráčů − 1), hráčů 1–6
+```
+
+Mutace se poznají podle klíče i jména (`Ambershine` = `Amberlit`). Neznámý druh má
+cenu 0. Vzorec je zjištěný z Aries Mod, kód je vlastní.
+
+- **Katalog** (`data/catalog.ts`) je snímek veřejného API `mg-api.ariedam.fr`
+  v `data/catalog-data.json`. Za běhu se nic nestahuje; obnova:
+  `node scripts/update-catalog.mjs`.
+- **Hodnota pole** (`game/value.ts`) – zralé, podle filtrů sklizně, celé pole
+  (velikost a mutace rostoucích plodů jsou dané už při zasazení) a batoh.
+- **Doby růstu** (`game/growtimes.ts`) – katalog zná jen dozrání víckrát
+  sklízených rostlin, doba dozrání plodu se proto učí z `endTime − startTime`
+  plodů na poli (každou sekundu v `tick()`), localStorage `mg-autofarm-growtimes`.
+- **Zisk** (`game/profit.ts`) – tržba = rostlin × sklizní × plodů na sklizeň × cena,
+  náklad = rostlin × cena semínka (jednou za rostlinu), doba = růst + (sklizní − 1) × dorůstání.
+  Záložka Kalkulačka (`ui/tabs/calc.ts`) drží svůj stav v `ui/calc/state.ts`
+  a formulář váže přes `data-c` (ne `data-k`, to je nastavení).
 
 ## Pravidla mezi moduly
 

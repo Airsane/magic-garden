@@ -6,6 +6,7 @@ import { summary } from "../game/garden";
 import { readGame } from "../game/reader";
 import { addLog } from "../log";
 import { connected } from "../net/socket";
+import { observeGrowTimes } from "../game/growtimes";
 import { checkMutations } from "../notify";
 import { setRenderer, state } from "../state";
 import { allTime, saveAll, session } from "../stats";
@@ -146,7 +147,7 @@ async function tick(): Promise<void> {
       if (session.coinHistory.length > 240) session.coinHistory.shift();
     }
   }
-  if (game.tiles) checkMutations(game);
+  if (game.tiles) { checkMutations(game); observeGrowTimes(game.tiles); }
   const rate = perHour(session.harvested, Date.now() - session.start);
   if (rate && Date.now() - session.start > 10 * 60_000 && rate > (allTime.bestPerHour || 0)) {
     allTime.bestPerHour = rate; saveAll();

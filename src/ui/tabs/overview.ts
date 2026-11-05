@@ -1,6 +1,7 @@
 // Záložka "Přehled": mince, statistiky relace a celkové.
 
-import type { GardenSummary } from "../../game/garden";
+import { harvestable, type GardenSummary } from "../../game/garden";
+import { gardenValue, inventoryValue } from "../../game/value";
 import { addLog } from "../../log";
 import { requestNotif } from "../../notify";
 import { renderLive, state } from "../../state";
@@ -15,6 +16,7 @@ function overviewHTML(sum: GardenSummary | null): string {
   const d = now - session.start;
   const gained = session.coinsStart != null && session.coinsNow != null ? session.coinsNow - session.coinsStart : null;
   const hungriest = (game.pets || []).filter((p) => p.pct != null).sort((a, b) => a.pct! - b.pct!)[0];
+  const value = game.tiles ? gardenValue(game.tiles, game.players, now, harvestable) : null;
   const topSpecies = Object.entries(allTime.species).sort((a, b) => b[1] - a[1])[0]?.[0];
   return `
       <div class="grid">
@@ -37,6 +39,9 @@ function overviewHTML(sum: GardenSummary | null): string {
       ${row("Další dozraje", sum?.next ? `${esc(sum.next.species)} za ${dur(sum.next.end - now)}` : "–")}
       ${row("Volná políčka", sum?.empty != null ? `${fmt(sum.empty)} z ${fmt(sum.owned)}` : "–")}
       ${row("Plodiny v batohu", fmt(game.cropInv))}
+      ${row("Hodnota zralých na poli", fmtShort(value?.ripe))}
+      ${row("Hodnota celého pole", fmtShort(value?.total))}
+      ${row("Hodnota batohu", game.cropInv != null ? fmtShort(inventoryValue(game.cropItems, game.players)) : "–")}
       ${row("Odpojení v relaci", fmt(session.disconnects))}
       ${row("Nejvíc mincí v relaci", fmtShort(session.coinsPeak))}
       ${row("Neprošlo (sklizeň / sázení)", `${fmt(session.failedHarvest)} / ${fmt(session.failedPlant)}`)}
