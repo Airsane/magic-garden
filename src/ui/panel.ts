@@ -13,6 +13,7 @@ import { dur, esc, perHour } from "../util/format";
 import { bindFields } from "./fields";
 import CSS from "./styles.css";
 import type { TabView } from "./tab";
+import { calcTab } from "./tabs/calc";
 import { gardenTab } from "./tabs/garden";
 import { harvestTab } from "./tabs/harvest";
 import { logTab } from "./tabs/log";
@@ -27,6 +28,7 @@ const TABS: Record<Tab, TabView> = {
   harvest: harvestTab,
   plant: plantTab,
   pets: petsTab,
+  calc: calcTab,
   log: logTab,
 };
 

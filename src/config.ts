@@ -1,6 +1,6 @@
 // Uživatelské nastavení – ukládá se do localStorage stránky.
 
-export type Tab = "overview" | "garden" | "harvest" | "plant" | "pets" | "log";
+export type Tab = "overview" | "garden" | "harvest" | "plant" | "pets" | "calc" | "log";
 export type PlantMode = "priority" | "rotate";
 
 export interface PanelState {
