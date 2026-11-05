@@ -17,6 +17,10 @@ describe("grow times", () => {
     observeGrowTimes({ 0: plant("Carrot", 0, 90_000) });
     expect(observedSeconds("Carrot")).toBe(90);
   });
+  it("ignores slots without a start time", () => {
+    observeGrowTimes({ 0: { objectType: "plant", species: "Carrot", slots: [{ species: "Carrot", endTime: 1_793_892_259_000 }] } });
+    expect(observedSeconds("Carrot")).toBeNull();
+  });
   it("builds defaults from catalog and observations", () => {
     expect(defaultTimes("Carrot")).toEqual({ grow: null, regrow: null });
     observeGrowTimes({ 0: plant("Carrot", 0, 60_000), 1: plant("Apple", 0, 3_600_000) });

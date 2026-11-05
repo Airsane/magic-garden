@@ -9,6 +9,8 @@ import { readLS, writeLS } from "../config";
 import { allSlots, type Tiles } from "./garden";
 
 const KEY = "mg-autofarm-growtimes";
+/** delší doba je nesmysl – typicky plod bez startTime (start = 0) */
+const MAX_SECONDS = 7 * 24 * 3600;
 
 /** druh → sekundy */
 let times: Record<string, number> = readLS<Record<string, number>>(KEY, {});
@@ -18,7 +20,7 @@ export function observeGrowTimes(tiles: Tiles | null): void {
   for (const c of allSlots(tiles)) {
     if (!(c.end > c.start)) continue;
     const sec = Math.round((c.end - c.start) / 1000);
-    if (sec > 0 && times[c.species] !== sec) { times[c.species] = sec; changed = true; }
+    if (sec > 0 && sec <= MAX_SECONDS && times[c.species] !== sec) { times[c.species] = sec; changed = true; }
   }
   if (changed) writeLS(KEY, times);
 }

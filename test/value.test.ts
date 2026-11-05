@@ -37,6 +37,10 @@ describe("inventoryValue", () => {
       { species: "Nope", size: 80 },
     ], 1)).toBe(100);
   });
+  it("converts a legacy scale to size", () => {
+    expect(inventoryValue([{ species: "Carrot", scale: 3 }], 1)).toBe(60);
+    expect(inventoryValue([{ species: "Carrot", scale: 2 }], 1)).toBe(40);
+  });
   it("inventory item without size is valued at size 50", () => {
     expect(inventoryValue([{ species: "Carrot" }], 1)).toBe(20);
   });
