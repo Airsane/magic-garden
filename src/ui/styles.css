@@ -1,0 +1,76 @@
+/* Styly panelu Auto Farm. Vše je zanořené pod #mgaf (a toast pod #mgaf-toast), aby se to nepletlo se stylem hry. */
+#mgaf{--bg:rgba(16,22,18,.95);--fg:#e7f1e8;--mut:#93aa95;--line:rgba(255,255,255,.08);--card:rgba(255,255,255,.045);
+  --acc:#6bd26b;--acc2:#3f9446;--gold:#f0c34a;--warn:#e98b4a;--blue:#6fb6ff;
+  position:fixed;top:14px;right:14px;z-index:2147483647;width:300px;color:var(--fg);background:var(--bg);
+  font:12px/1.45 ui-sans-serif,system-ui,"Segoe UI",sans-serif;border:1px solid rgba(130,200,130,.22);
+  border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.5);backdrop-filter:blur(6px);user-select:none}
+#mgaf *{box-sizing:border-box}
+#mgaf .hd{display:flex;align-items:center;gap:8px;padding:9px 11px;cursor:move}
+#mgaf .hd b{flex:1;font-size:13px;letter-spacing:.01em}
+#mgaf .dot{width:9px;height:9px;border-radius:50%;background:#666;flex:none}
+#mgaf .dot.on{background:var(--acc);box-shadow:0 0 8px var(--acc)}
+#mgaf .dot.idle{background:var(--gold)}
+#mgaf .dot.pause{background:var(--warn)}
+#mgaf .ic{cursor:pointer;opacity:.65;padding:0 4px;font-size:14px}#mgaf .ic:hover{opacity:1}
+#mgaf .quick{display:flex;gap:6px;padding:0 11px 9px}
+#mgaf .sw{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:6px 0;border-radius:9px;cursor:pointer;
+  background:var(--card);border:1px solid var(--line);font-weight:600;color:var(--mut);transition:.15s}
+#mgaf .sw.on{background:rgba(107,210,107,.16);border-color:rgba(107,210,107,.5);color:#fff}
+#mgaf .tabs{display:flex;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+#mgaf .tabs button{flex:1;background:none;border:0;color:var(--mut);padding:7px 0 6px;cursor:pointer;font:inherit;font-size:15px;
+  border-bottom:2px solid transparent;position:relative}
+#mgaf .tabs button.act{color:#fff;border-bottom-color:var(--acc)}
+#mgaf .tabs button span{display:block;font-size:9.5px;letter-spacing:.03em}
+#mgaf .pg{padding:10px 12px 12px;max-height:62vh;overflow:auto;scrollbar-width:thin}
+#mgaf .row{display:flex;justify-content:space-between;gap:8px;padding:1.5px 0}
+#mgaf .row>span:first-child{color:var(--mut)}
+#mgaf .row>span:last-child{font-variant-numeric:tabular-nums;text-align:right}
+#mgaf h4{margin:11px 0 5px;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:#86b887;font-weight:600}
+#mgaf h4:first-child{margin-top:0}
+#mgaf .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+#mgaf .tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 4px;text-align:center}
+#mgaf .tile .v{font-size:17px;font-weight:650;font-variant-numeric:tabular-nums;line-height:1.2}
+#mgaf .tile .l{font-size:10px;color:var(--mut)}
+#mgaf .bar{height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;margin:2px 0 5px}
+#mgaf .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc2),var(--acc))}
+#mgaf label.f{display:flex;align-items:center;gap:7px;padding:3px 0;cursor:pointer}
+#mgaf input[type=number],#mgaf select{margin-left:auto;background:#0d130f;color:var(--fg);border:1px solid #344536;border-radius:6px;padding:3px 5px;font:inherit}
+#mgaf input[type=number]{width:62px}
+#mgaf input[type=checkbox]{accent-color:var(--acc)}
+#mgaf .btn{flex:1;padding:7px;border:0;border-radius:8px;background:var(--acc2);color:#fff;cursor:pointer;font:inherit;font-weight:600}
+#mgaf .btn:hover{filter:brightness(1.12)}
+#mgaf .btn.sec{background:var(--card);border:1px solid var(--line);font-weight:500;color:var(--fg)}
+#mgaf .btns{display:flex;gap:6px;margin-top:8px}
+#mgaf .st{margin-top:8px;padding:6px 8px;border-radius:8px;background:var(--card);color:#d4e6d5;font-size:11.5px}
+#mgaf .lg>div{padding:3px 0;border-bottom:1px dashed var(--line);display:flex;gap:7px}
+#mgaf .lg time{color:var(--mut);font-variant-numeric:tabular-nums;flex:none}
+#mgaf .lg .warn{color:var(--warn)}#mgaf .lg .gold{color:var(--gold)}#mgaf .lg .ok{color:#9fe09f}
+#mgaf .muted{color:var(--mut)}
+#mgaf .map{display:grid;grid-template-columns:repeat(20,1fr);gap:2px;margin:4px 0 6px}
+#mgaf .map i{aspect-ratio:1;border-radius:2px;background:rgba(255,255,255,.06)}
+#mgaf .map i.g{background:rgba(107,210,107,var(--p,.3))}
+#mgaf .map i.r{background:var(--acc);box-shadow:0 0 4px rgba(107,210,107,.7)}
+#mgaf .map i.m{background:var(--gold);box-shadow:0 0 5px rgba(240,195,74,.8)}
+#mgaf .map i.p{background:var(--blue)}
+#mgaf .map i.o{background:#8a7a9a}
+#mgaf .map i.e{background:transparent;border:1px dashed rgba(255,255,255,.14)}
+#mgaf .legend{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:10px;color:var(--mut)}
+#mgaf .legend b{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+#mgaf .sp{display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px solid var(--line)}
+#mgaf .sp .n{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mgaf .sp .q{color:var(--mut);font-variant-numeric:tabular-nums;min-width:34px;text-align:right}
+#mgaf .sp .mv{cursor:pointer;opacity:.55;padding:0 2px}#mgaf .sp .mv:hover{opacity:1}
+#mgaf .chips{display:flex;flex-wrap:wrap;gap:4px}
+#mgaf .chip{padding:2px 8px;border-radius:999px;background:var(--card);border:1px solid var(--line);cursor:pointer;color:var(--fg)}
+#mgaf .chip.off{opacity:.45;text-decoration:line-through}
+#mgaf .pet{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:7px 8px;margin-bottom:6px}
+#mgaf .pet .t{display:flex;align-items:center;gap:6px}
+#mgaf .pet .t b{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mgaf .pet .t button{background:var(--acc2);border:0;color:#fff;border-radius:6px;padding:2px 7px;cursor:pointer;font:inherit}
+#mgaf .pet .d{font-size:10.5px;color:var(--mut);margin-top:2px}
+#mgaf .hb{height:7px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:4px}
+#mgaf .hb i{display:block;height:100%}
+#mgaf svg.spark{width:100%;height:42px;display:block;margin:2px 0 4px}
+#mgaf-toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);z-index:2147483647;background:rgba(16,22,18,.95);
+  color:#f6e7b8;border:1px solid rgba(240,195,74,.5);padding:8px 14px;border-radius:10px;font:600 13px system-ui,sans-serif;
+  box-shadow:0 8px 24px rgba(0,0,0,.5);transition:opacity .3s;pointer-events:none}

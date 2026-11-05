@@ -1,0 +1,16 @@
+{
+  "name": "mg-autoharvest",
+  "version": "2.2.0",
+  "private": true,
+  "description": "Magic Garden – Auto Farm (Tampermonkey userscript)",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "watch": "node scripts/build.mjs --watch",
+    "typecheck": "tsc --noEmit && node scripts/check-cycles.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2"
+  }
+}
