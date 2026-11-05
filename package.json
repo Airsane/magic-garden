@@ -7,10 +7,12 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "watch": "node scripts/build.mjs --watch",
-    "typecheck": "tsc --noEmit && node scripts/check-cycles.mjs"
+    "typecheck": "tsc --noEmit && node scripts/check-cycles.mjs",
+    "test": "vitest run"
   },
   "devDependencies": {
     "esbuild": "^0.28.2",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
   }
 }

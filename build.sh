@@ -30,6 +30,8 @@ if (( check )); then
   npx --no-install tsc --noEmit
   echo "→ Kontrola cyklických importů"
   node scripts/check-cycles.mjs
+  echo "→ Testy"
+  npx --no-install vitest run
 fi
 
 echo "→ Build"

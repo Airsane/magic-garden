@@ -28,7 +28,8 @@ Výsledek: `dist/mg-autoharvest.user.js` (jeden soubor i s hlavičkou `==UserScr
 | `./build.sh --watch` | sestavuje při každé změně v `src/` (bez kontrol) |
 | `./build.sh --minify` | zmenšený výstup |
 | `./build.sh --no-check` | jen build, bez kontrol |
-| `npm run typecheck` | jen kontroly |
+| `npm run typecheck` | jen kontroly typů a cyklů |
+| `npm test` | jen testy (vitest, `test/*.test.ts`) |
 
 ## Vývoj
 
@@ -51,6 +52,17 @@ Pohodlný postup bez neustálého kopírování do Tampermonkey:
    ```
 
 3. Spusť `./build.sh --watch` a po každé změně jen obnov stránku hry (F5).
+
+### Aktualizace katalogu
+
+Ceny plodin, semínek a násobitele mutací jsou ve snímku `src/data/catalog-data.json`
+(z veřejného API `mg-api.ariedam.fr`). Po aktualizaci hry ho obnov:
+
+```bash
+node scripts/update-catalog.mjs
+```
+
+### Vydání
 
 Vydání nové verze: zvyš `version` v `package.json` (propíše se do hlavičky i do logu
 v konzoli) a spusť `./build.sh`. Metadata hlavičky (`@match`, `@run-at`…) jsou

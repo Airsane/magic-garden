@@ -1,0 +1,804 @@
+{
+  "source": "https://mg-api.ariedam.fr/data",
+  "fetchedAt": "2026-11-05T15:15:47.559Z",
+  "plants": {
+    "Carrot": {
+      "species": "Carrot",
+      "name": "Carrot",
+      "seedPrice": 10,
+      "sellPrice": 20,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Cabbage": {
+      "species": "Cabbage",
+      "name": "Cabbage",
+      "seedPrice": 30,
+      "sellPrice": 42,
+      "maxSize": 3,
+      "harvest": "Multiple",
+      "slots": 1,
+      "secondsToMature": 45
+    },
+    "Strawberry": {
+      "species": "Strawberry",
+      "name": "Strawberry",
+      "seedPrice": 50,
+      "sellPrice": 14,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 5,
+      "secondsToMature": 70
+    },
+    "Aloe": {
+      "species": "Aloe",
+      "name": "Aloe",
+      "seedPrice": 135,
+      "sellPrice": 310,
+      "maxSize": 2.5,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Beet": {
+      "species": "Beet",
+      "name": "Beet",
+      "seedPrice": 210,
+      "sellPrice": 350,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Daisy": {
+      "species": "Daisy",
+      "name": "Daisy",
+      "seedPrice": 100,
+      "sellPrice": 130,
+      "maxSize": 2.5,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "PurpleDaisy": {
+      "species": "PurpleDaisy",
+      "name": "Purple Daisy",
+      "seedPrice": null,
+      "sellPrice": 9999,
+      "maxSize": 2.5,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Clover": {
+      "species": "Clover",
+      "name": "Clover",
+      "seedPrice": 170,
+      "sellPrice": 30,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "FourLeafClover": {
+      "species": "FourLeafClover",
+      "name": "Four-Leaf Clover",
+      "seedPrice": 170,
+      "sellPrice": 7777,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Rose": {
+      "species": "Rose",
+      "name": "Rose",
+      "seedPrice": 229,
+      "sellPrice": 300,
+      "maxSize": 4,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "FavaBean": {
+      "species": "FavaBean",
+      "name": "Fava Bean Pod",
+      "seedPrice": 250,
+      "sellPrice": 30,
+      "maxSize": 3,
+      "harvest": "Multiple",
+      "slots": 8,
+      "secondsToMature": 900
+    },
+    "Delphinium": {
+      "species": "Delphinium",
+      "name": "Delphinium",
+      "seedPrice": 300,
+      "sellPrice": 530,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Snowdrop": {
+      "species": "Snowdrop",
+      "name": "Snowdrop",
+      "seedPrice": 300,
+      "sellPrice": 250,
+      "maxSize": 1.85,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "SnowdropDouble": {
+      "species": "SnowdropDouble",
+      "name": "Double Snowdrop",
+      "seedPrice": null,
+      "sellPrice": 8888,
+      "maxSize": 1.85,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Blueberry": {
+      "species": "Blueberry",
+      "name": "Blueberry",
+      "seedPrice": 400,
+      "sellPrice": 23,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 5,
+      "secondsToMature": 105
+    },
+    "Apple": {
+      "species": "Apple",
+      "name": "Apple",
+      "seedPrice": 500,
+      "sellPrice": 800,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 7,
+      "secondsToMature": 79200
+    },
+    "OrangeTulip": {
+      "species": "OrangeTulip",
+      "name": "Tulip",
+      "seedPrice": 600,
+      "sellPrice": 767,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Tomato": {
+      "species": "Tomato",
+      "name": "Tomato",
+      "seedPrice": 800,
+      "sellPrice": 27,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 2,
+      "secondsToMature": 1100
+    },
+    "Daffodil": {
+      "species": "Daffodil",
+      "name": "Daffodil",
+      "seedPrice": 1000,
+      "sellPrice": 1090,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Corn": {
+      "species": "Corn",
+      "name": "Corn",
+      "seedPrice": 1300,
+      "sellPrice": 36,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 1,
+      "secondsToMature": 130
+    },
+    "Watermelon": {
+      "species": "Watermelon",
+      "name": "Watermelon",
+      "seedPrice": 2500,
+      "sellPrice": 2708,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Echeveria": {
+      "species": "Echeveria",
+      "name": "Echeveria",
+      "seedPrice": 2500,
+      "sellPrice": 3200,
+      "maxSize": 2.75,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Pumpkin": {
+      "species": "Pumpkin",
+      "name": "Pumpkin",
+      "seedPrice": 3000,
+      "sellPrice": 3700,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Cattail": {
+      "species": "Cattail",
+      "name": "Cattail",
+      "seedPrice": 4000,
+      "sellPrice": 1800,
+      "maxSize": 2.5,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "VariegatedCattail": {
+      "species": "VariegatedCattail",
+      "name": "Variegated Cattail",
+      "seedPrice": null,
+      "sellPrice": 11111,
+      "maxSize": 2.5,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Pear": {
+      "species": "Pear",
+      "name": "Pear",
+      "seedPrice": 6000,
+      "sellPrice": 3000,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 7,
+      "secondsToMature": 79200
+    },
+    "Gentian": {
+      "species": "Gentian",
+      "name": "Gentian",
+      "seedPrice": 9000,
+      "sellPrice": 10000,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Lavender": {
+      "species": "Lavender",
+      "name": "Lavender",
+      "seedPrice": 10000,
+      "sellPrice": 20000,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Coconut": {
+      "species": "Coconut",
+      "name": "Coconut",
+      "seedPrice": 10000,
+      "sellPrice": 12000,
+      "maxSize": 3,
+      "harvest": "Multiple",
+      "slots": 7,
+      "secondsToMature": 79200
+    },
+    "PineTree": {
+      "species": "PineTree",
+      "name": "Pine Tree",
+      "seedPrice": 12000,
+      "sellPrice": 75000,
+      "maxSize": 3.5,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Banana": {
+      "species": "Banana",
+      "name": "Banana",
+      "seedPrice": 15000,
+      "sellPrice": 1750,
+      "maxSize": 1.7,
+      "harvest": "Multiple",
+      "slots": 5,
+      "secondsToMature": 79200
+    },
+    "Leek": {
+      "species": "Leek",
+      "name": "Leek",
+      "seedPrice": 15000,
+      "sellPrice": 35000,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Lily": {
+      "species": "Lily",
+      "name": "Lily",
+      "seedPrice": 20000,
+      "sellPrice": 20123,
+      "maxSize": 2.75,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Saffron": {
+      "species": "Saffron",
+      "name": "Saffron",
+      "seedPrice": 30000,
+      "sellPrice": 50000,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Cardoon": {
+      "species": "Cardoon",
+      "name": "Cardoon",
+      "seedPrice": 30000,
+      "sellPrice": 50000,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Camellia": {
+      "species": "Camellia",
+      "name": "Camellia",
+      "seedPrice": 55000,
+      "sellPrice": 4875,
+      "maxSize": 2.5,
+      "harvest": "Multiple",
+      "slots": 8,
+      "secondsToMature": 79200
+    },
+    "Squash": {
+      "species": "Squash",
+      "name": "Squash",
+      "seedPrice": 55000,
+      "sellPrice": 7000,
+      "maxSize": 2.5,
+      "harvest": "Multiple",
+      "slots": 3,
+      "secondsToMature": 1500
+    },
+    "Peach": {
+      "species": "Peach",
+      "name": "Peach",
+      "seedPrice": 85000,
+      "sellPrice": 9000,
+      "maxSize": 3,
+      "harvest": "Multiple",
+      "slots": 7,
+      "secondsToMature": 79200
+    },
+    "BurrosTail": {
+      "species": "BurrosTail",
+      "name": "Burro's Tail",
+      "seedPrice": 93000,
+      "sellPrice": 6000,
+      "maxSize": 2.5,
+      "harvest": "Multiple",
+      "slots": 2,
+      "secondsToMature": 1800
+    },
+    "Persimmon": {
+      "species": "Persimmon",
+      "name": "Persimmon",
+      "seedPrice": 120000,
+      "sellPrice": 25000,
+      "maxSize": 2.5,
+      "harvest": "Multiple",
+      "slots": 6,
+      "secondsToMature": 79200
+    },
+    "Mushroom": {
+      "species": "Mushroom",
+      "name": "Mushroom",
+      "seedPrice": 150000,
+      "sellPrice": 160000,
+      "maxSize": 3.5,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Cactus": {
+      "species": "Cactus",
+      "name": "Cactus",
+      "seedPrice": 200000,
+      "sellPrice": 220000,
+      "maxSize": 1.8,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Bamboo": {
+      "species": "Bamboo",
+      "name": "Bamboo Shoot",
+      "seedPrice": 400000,
+      "sellPrice": 500000,
+      "maxSize": 2,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Eggplant": {
+      "species": "Eggplant",
+      "name": "Eggplant",
+      "seedPrice": 500000,
+      "sellPrice": 100000,
+      "maxSize": 2.5,
+      "harvest": "Multiple",
+      "slots": 3,
+      "secondsToMature": 79200
+    },
+    "PricklyPear": {
+      "species": "PricklyPear",
+      "name": "Prickly Pear",
+      "seedPrice": 700000,
+      "sellPrice": 75000,
+      "maxSize": 2.5,
+      "harvest": "Multiple",
+      "slots": 5,
+      "secondsToMature": 79200
+    },
+    "VioletCort": {
+      "species": "VioletCort",
+      "name": "Violet Cort",
+      "seedPrice": 520000,
+      "sellPrice": 600000,
+      "maxSize": 3.5,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Chrysanthemum": {
+      "species": "Chrysanthemum",
+      "name": "Chrysanthemum",
+      "seedPrice": 670000,
+      "sellPrice": 18000,
+      "maxSize": 2.75,
+      "harvest": "Multiple",
+      "slots": 7,
+      "secondsToMature": 79200
+    },
+    "Date": {
+      "species": "Date",
+      "name": "Date",
+      "seedPrice": 750000,
+      "sellPrice": 15000,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 11,
+      "secondsToMature": 79200
+    },
+    "Grape": {
+      "species": "Grape",
+      "name": "Grape",
+      "seedPrice": 850000,
+      "sellPrice": 50000,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 1,
+      "secondsToMature": 79200
+    },
+    "Poinsettia": {
+      "species": "Poinsettia",
+      "name": "Poinsettia",
+      "seedPrice": 900000,
+      "sellPrice": 20000,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 4,
+      "secondsToMature": 79200
+    },
+    "Habanero": {
+      "species": "Habanero",
+      "name": "Habanero",
+      "seedPrice": 700000,
+      "sellPrice": 15000,
+      "maxSize": 2.5,
+      "harvest": "Multiple",
+      "slots": 8,
+      "secondsToMature": 79200
+    },
+    "Pepper": {
+      "species": "Pepper",
+      "name": "Pepper",
+      "seedPrice": 1000000,
+      "sellPrice": 7000,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 9,
+      "secondsToMature": 79200
+    },
+    "Ube": {
+      "species": "Ube",
+      "name": "Ube",
+      "seedPrice": 1000000,
+      "sellPrice": 2000000,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Milkcap": {
+      "species": "Milkcap",
+      "name": "Milkcap",
+      "seedPrice": 1000000,
+      "sellPrice": 3000000,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Lemon": {
+      "species": "Lemon",
+      "name": "Lemon",
+      "seedPrice": 2000000,
+      "sellPrice": 50000,
+      "maxSize": 3,
+      "harvest": "Multiple",
+      "slots": 6,
+      "secondsToMature": 79200
+    },
+    "PassionFruit": {
+      "species": "PassionFruit",
+      "name": "Passion Fruit",
+      "seedPrice": 2750000,
+      "sellPrice": 200000,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 2,
+      "secondsToMature": 79200
+    },
+    "DragonFruit": {
+      "species": "DragonFruit",
+      "name": "Dragon Fruit",
+      "seedPrice": 5000000,
+      "sellPrice": 30000,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 7,
+      "secondsToMature": 79200
+    },
+    "Cacao": {
+      "species": "Cacao",
+      "name": "Cacao Fruit",
+      "seedPrice": 10000000,
+      "sellPrice": 150000,
+      "maxSize": 2.5,
+      "harvest": "Multiple",
+      "slots": 6,
+      "secondsToMature": 79200
+    },
+    "Lychee": {
+      "species": "Lychee",
+      "name": "Lychee Fruit",
+      "seedPrice": 25000000,
+      "sellPrice": 50000,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 6,
+      "secondsToMature": 79200
+    },
+    "Sunflower": {
+      "species": "Sunflower",
+      "name": "Sunflower",
+      "seedPrice": 100000000,
+      "sellPrice": 750000,
+      "maxSize": 2.5,
+      "harvest": "Multiple",
+      "slots": 1,
+      "secondsToMature": 10800
+    },
+    "Marigold": {
+      "species": "Marigold",
+      "name": "Marigold",
+      "seedPrice": 250000000,
+      "sellPrice": 1000000,
+      "maxSize": 2.5,
+      "harvest": "Multiple",
+      "slots": 1,
+      "secondsToMature": 14400
+    },
+    "Dawnbreaker": {
+      "species": "Dawnbreaker",
+      "name": "Dawnbreaker",
+      "seedPrice": 10000000,
+      "sellPrice": 12000000,
+      "maxSize": 3,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Emberbloom": {
+      "species": "Emberbloom",
+      "name": "Emberbloom",
+      "seedPrice": 25000000,
+      "sellPrice": 5000000,
+      "maxSize": 2.5,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Embercrown": {
+      "species": "Embercrown",
+      "name": "Embercrown",
+      "seedPrice": null,
+      "sellPrice": 15000000,
+      "maxSize": 2.5,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Starweaver": {
+      "species": "Starweaver",
+      "name": "Starweaver Fruit",
+      "seedPrice": 1000000000,
+      "sellPrice": 10000000,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 1,
+      "secondsToMature": 86400
+    },
+    "ThunderCelestial": {
+      "species": "ThunderCelestial",
+      "name": "Thunderpeel",
+      "seedPrice": 3000000000,
+      "sellPrice": 100000,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 16,
+      "secondsToMature": 86400
+    },
+    "ThunderCelestialShroomPlant": {
+      "species": "ThunderCelestialShroomPlant",
+      "name": "Stormcap",
+      "seedPrice": 3000000000,
+      "sellPrice": 1000000,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 16,
+      "secondsToMature": 86400
+    },
+    "DawnCelestial": {
+      "species": "DawnCelestial",
+      "name": "Dawnbinder Bulb",
+      "seedPrice": 10000000000,
+      "sellPrice": 11000000,
+      "maxSize": 2.5,
+      "harvest": "Multiple",
+      "slots": 1,
+      "secondsToMature": 86400
+    },
+    "MoonCelestial": {
+      "species": "MoonCelestial",
+      "name": "Moonbinder Bulb",
+      "seedPrice": 50000000000,
+      "sellPrice": 11000000,
+      "maxSize": 2,
+      "harvest": "Multiple",
+      "slots": 3,
+      "secondsToMature": 86400
+    },
+    "GhostPlant": {
+      "species": "GhostPlant",
+      "name": "Ghost Plant",
+      "seedPrice": 25000,
+      "sellPrice": 100000,
+      "maxSize": 2.75,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Foxfire": {
+      "species": "Foxfire",
+      "name": "Foxfire",
+      "seedPrice": 400000,
+      "sellPrice": 100000,
+      "maxSize": 2.5,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "Witchfire": {
+      "species": "Witchfire",
+      "name": "Witchfire",
+      "seedPrice": null,
+      "sellPrice": 2500000,
+      "maxSize": 2.5,
+      "harvest": "Single",
+      "slots": 1,
+      "secondsToMature": null
+    },
+    "DeadlyNightshade": {
+      "species": "DeadlyNightshade",
+      "name": "Deadly Nightshade",
+      "seedPrice": 5000000,
+      "sellPrice": 250000,
+      "maxSize": 2.5,
+      "harvest": "Multiple",
+      "slots": 3,
+      "secondsToMature": 79200
+    }
+  },
+  "mutations": {
+    "Gold": {
+      "key": "Gold",
+      "name": "Gold",
+      "group": "Growth",
+      "mult": 25
+    },
+    "Rainbow": {
+      "key": "Rainbow",
+      "name": "Rainbow",
+      "group": "Growth",
+      "mult": 50
+    },
+    "Wet": {
+      "key": "Wet",
+      "name": "Wet",
+      "group": "Hydro",
+      "mult": 2
+    },
+    "Chilled": {
+      "key": "Chilled",
+      "name": "Chilled",
+      "group": "Hydro",
+      "mult": 2
+    },
+    "Frozen": {
+      "key": "Frozen",
+      "name": "Frozen",
+      "group": "Hydro",
+      "mult": 6
+    },
+    "Thunderstruck": {
+      "key": "Thunderstruck",
+      "name": "Thunderstruck",
+      "group": "Hydro",
+      "mult": 5
+    },
+    "Dawnlit": {
+      "key": "Dawnlit",
+      "name": "Dawnlit",
+      "group": "Lunar",
+      "mult": 4
+    },
+    "Ambershine": {
+      "key": "Ambershine",
+      "name": "Amberlit",
+      "group": "Lunar",
+      "mult": 6
+    },
+    "Dawncharged": {
+      "key": "Dawncharged",
+      "name": "Dawnbound",
+      "group": "Lunar",
+      "mult": 7
+    },
+    "Ambercharged": {
+      "key": "Ambercharged",
+      "name": "Amberbound",
+      "group": "Lunar",
+      "mult": 10
+    },
+    "Thundercharged": {
+      "key": "Thundercharged",
+      "name": "Thundercharged",
+      "group": "Hydro",
+      "mult": 7
+    }
+  }
+}
