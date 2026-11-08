@@ -21,7 +21,7 @@
 2. **Čtení**: `readGame()` poskládá z jotai atomů jeden `GameSnapshot`
    (zahrada, batoh, semínka, mapa, mazlíčci, mince).
 3. **Akce**: každých `intervalSec` sekund proběhne `cycle()`:
-   sklizeň → krmení → (prodej) → sázení. Každá akce se po odeslání **ověří**
+   sklizeň → krmení → (prodej) → nákup semínek → sázení. Každá akce se po odeslání **ověří**
    novým čtením hry (co se nesklidilo / nezasadilo, se počítá jako neúspěch
    a po úplném neúspěchu následuje 1 min pauza).
 4. **UI**: `tick()` každou sekundu obnoví `state.game`, statistiky mincí
@@ -48,6 +48,7 @@ Posílané příkazy (`net/commands.ts`):
 | `PlantSeed` | `slot`, `species` |
 | `FeedPet` | `petItemId`, `cropItemId` |
 | `SellAllCrops` | – |
+| `PurchaseShopItem` | `shop: "seed"`, `viewMode` (`"list"`/`"grid"` z localStorage hry), `item: { itemType: "Seed", species }`, `quantity?` (jen > 1) |
 
 Mimo `QuinoaCommand` posílá anti-AFK ještě `PlayerPosition` (bez čísla).
 
@@ -67,6 +68,8 @@ hledají podle `debugLabel` v `window.jotaiAtomCache`:
 | `myPredictedPetSlotsAtom` / `myPrimitivePetSlotsAtom` | aktivní mazlíčci |
 | `positionAtom` | pozice hráče (anti-AFK) |
 | `numPlayersAtom` | počet hráčů (bonus za přátele) |
+| `stateAtom` | `child.data.shops.seed` – obchod místnosti (`restockId`, `inventory`) |
+| `myUserSlotAtom` | `data.shopPurchases.seed` – co hráč koupil v aktuálním restocku |
 
 Tvar dat se může s verzí hry měnit, proto jsou typy v `game/*.ts` „volné“
 (všechna pole volitelná) a čtení je všude defenzivní. Když hra něco přejmenuje,

@@ -124,6 +124,23 @@ export const S: Settings = { ...stored, panel: { ...DEFAULTS.panel, ...stored.pa
 
 export const save = (): void => writeLS(KEY, S);
 
+
+/** Omezení rozsahu hodnot – stejné meze jako v HTML atributech min/max. */
+export function clampField(k: FieldKey, v: number): number {
+  switch (k) {
+    case "gapMs": return Math.max(250, v || DEFAULTS.gapMs);
+    case "intervalSec": return Math.max(3, v || DEFAULTS.intervalSec);
+    case "minSize": return Math.min(100, Math.max(50, v || 50));
+    case "maxPerCycle": return Math.max(1, v || 1);
+    case "seedReserve": return Math.max(0, v || 0);
+    case "feedBelow": return Math.min(99, Math.max(1, v || 40));
+    case "feedTarget": return Math.min(100, Math.max(S.feedBelow + 1, v || 90));
+    case "buyTarget": return Number.isFinite(v) ? Math.max(1, Math.floor(v)) : 10;
+    case "buyCoinReserve": return Math.max(0, v || 0);
+    default: return v;
+  }
+}
+
 export function setField<K extends FieldKey>(k: K, v: Settings[K]): void {
   S[k] = v;
 }

@@ -159,11 +159,12 @@ async function tick(): Promise<void> {
 
 function statusLine(): string {
   if (!connected()) return "🔌 Nepřipojeno ke hře";
-  if (!active()) return "⏸ Vše vypnuto – zapni Sklizeň, Sázení nebo Krmení";
+  if (!active()) return "⏸ Vše vypnuto – zapni Sklizeň, Sázení, Krmení nebo Nákup";
   const parts: string[] = [];
   const now = Date.now();
   if (S.harvestOn && state.backoffHarvest > now) parts.push(`sklizeň v pauze ${dur(state.backoffHarvest - now)}`);
   if (S.plantOn && state.backoffPlant > now) parts.push(`sázení v pauze ${dur(state.backoffPlant - now)}`);
+  if (S.buyOn && state.backoffBuy > now) parts.push(`nákup v pauze ${dur(state.backoffBuy - now)}`);
   if (state.running) return "⏳ " + state.status;
   const next = Math.max(0, Math.ceil((state.lastCycle + S.intervalSec * 1000 - now) / 1000));
   return `${state.status} · další kontrola za ${next} s${parts.length ? " · " + parts.join(", ") : ""}`;
@@ -186,7 +187,8 @@ function renderLive(): void {
 
   const now = Date.now();
   const dot = $("[data-dot]");
-  const paused = (S.harvestOn && state.backoffHarvest > now) || (S.plantOn && state.backoffPlant > now);
+  const paused = (S.harvestOn && state.backoffHarvest > now) || (S.plantOn && state.backoffPlant > now) ||
+    (S.buyOn && state.backoffBuy > now);
   dot.className = "dot" + (!connected() ? "" : !active() ? " idle" : paused ? " pause" : " on");
   dot.title = !connected() ? "Nepřipojeno" : !active() ? "Připojeno, vypnuto" : paused ? "Pauza" : "Běží";
   root.querySelectorAll<HTMLElement>("[data-sw]").forEach((el) => el.classList.toggle("on", !!S[el.dataset.sw as ToggleKey]));

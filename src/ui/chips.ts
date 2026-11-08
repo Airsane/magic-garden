@@ -5,7 +5,7 @@ import { S, save } from "../config";
 import { toggleIn } from "../util/misc";
 import { chips } from "./templates";
 
-type ListKey = "excludeSpecies" | "feedBanned";
+type ListKey = "excludeSpecies" | "feedBanned" | "buyDisabled";
 
 export function drawToggleChips(opts: {
   box: HTMLElement | null;

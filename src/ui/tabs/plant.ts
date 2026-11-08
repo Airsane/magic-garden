@@ -1,14 +1,16 @@
 // Záložka "Sázení": režim, rezerva a pořadí (priorita) semínek.
 
 import { S, save } from "../../config";
+import { plantInfo } from "../../data/catalog";
 import { plantCandidates } from "../../farm/plant";
 import type { GardenSummary } from "../../game/garden";
 import { state } from "../../state";
 import { session } from "../../stats";
-import { esc, fmt } from "../../util/format";
+import { esc, fmt, fmtShort } from "../../util/format";
 import { toggleIn } from "../../util/misc";
+import { drawToggleChips } from "../chips";
 import type { TabView } from "../tab";
-import { bars, num, row } from "../templates";
+import { bars, cb, num, row } from "../templates";
 
 function plantLiveHTML(sum: GardenSummary | null): string {
   const game = state.game;
@@ -18,6 +20,7 @@ function plantLiveHTML(sum: GardenSummary | null): string {
       ${row("Volná políčka", sum?.empty != null ? `${fmt(sum.empty)} z ${fmt(sum.owned)}` : game.tiles ? "mapa se načítá…" : "–")}
       ${row("Semínek v batohu", fmt(total))}
       ${row("Zasazeno v relaci", fmt(session.planted))}
+      ${row("Koupeno v relaci", `${fmt(session.seedsBought)} ks · ${fmtShort(session.seedCoins)} 🪙`)}
       ${Object.keys(session.plantedSpecies).length ? "<h4>Nejvíc zasazeno</h4>" + bars(session.plantedSpecies, 4) : ""}`;
 }
 
@@ -57,6 +60,20 @@ function drawSeeds(root: HTMLElement): void {
   box.querySelectorAll<HTMLElement>("[data-down]").forEach((b) => b.addEventListener("click", () => move(+b.dataset.down!, 1)));
 }
 
+/** Štítky "nekupovat": jednorázová semínka, která má obchod teď skladem. */
+function drawBuyChips(root: HTMLElement): void {
+  drawToggleChips({
+    box: root.querySelector('[data-chips="buyDisabled"]'),
+    list: "buyDisabled",
+    all: new Set([
+      ...state.game.seedOffers.map((o) => o.species).filter((sp) => plantInfo(sp)?.harvest === "Single"),
+      ...S.buyDisabled,
+    ]),
+    emptyText: "Obchod teď nemá jednorázová semínka",
+    redraw: () => drawBuyChips(root),
+  });
+}
+
 export const plantTab: TabView = {
   icon: "🌱",
   title: "Sázení",
@@ -68,9 +85,18 @@ export const plantTab: TabView = {
         ${num("seedReserve", "Nechat v batohu (ks)", 0)}
         <h4>Semínka · pořadí = priorita</h4>
         <div data-seeds></div>
-        <div class="btns"><button class="btn" data-run="plant">🌱 Zasadit teď</button></div>`,
+        <div class="btns"><button class="btn" data-run="plant">🌱 Zasadit teď</button></div>
+        <h4>Nákup semínek</h4>
+        ${cb("buyOn", "Kupovat semínka (jen jednorázové rostliny)")}
+        ${num("buyTarget", "Držet v batohu (ks od druhu)", 1)}
+        ${num("buyCoinReserve", "Nechat si mincí", 0)}
+        <h4>Nekupovat <span class="muted" style="text-transform:none;letter-spacing:0">(klikni)</span></h4>
+        <div class="chips" data-chips="buyDisabled"></div>
+        <div class="btns"><button class="btn" data-run="buy">🛒 Koupit teď</button></div>
+        <div class="muted" style="font-size:10.5px">Keře a stromy (víc sklizní) se nekupují nikdy.</div>`,
   live({ live, root, sum, statusHTML }) {
     live.innerHTML = plantLiveHTML(sum) + statusHTML;
     drawSeeds(root);
+    drawBuyChips(root);
   },
 };
