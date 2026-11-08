@@ -29,6 +29,14 @@ export interface Settings {
   plantDisabled: string[];
   /** kolik semínek od druhu nechat v batohu */
   seedReserve: number;
+  // nákup semínek (jen jednorázové rostliny)
+  buyOn: boolean;
+  /** dokupovat do tolika kusů od druhu v batohu */
+  buyTarget: number;
+  /** pod tolik mincí nikdy neklesnout */
+  buyCoinReserve: number;
+  /** druhy, které se nekupují */
+  buyDisabled: string[];
   // krmení mazlíčků
   feedOn: boolean;
   /** krmit, když je sytost pod X % */
@@ -74,6 +82,10 @@ export const DEFAULTS: Settings = {
   plantOrder: [],
   plantDisabled: [],
   seedReserve: 0,
+  buyOn: false,
+  buyTarget: 10,
+  buyCoinReserve: 0,
+  buyDisabled: [],
   feedOn: false,
   feedBelow: 40,
   feedTarget: 90,

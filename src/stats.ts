@@ -21,6 +21,9 @@ export interface Session {
   species: Record<string, number>;
   /** zasazeno podle druhu */
   plantedSpecies: Record<string, number>;
+  /** koupených semínek a mincí za ně */
+  seedsBought: number;
+  seedCoins: number;
   coinsStart: number | null;
   coinsNow: number | null;
   coinsPeak: number | null;
@@ -46,6 +49,7 @@ const newSession = (): Session => ({
   failedHarvest: 0, failedPlant: 0, failedFeed: 0, fedPets: {},
   cycles: 0, sells: 0, disconnects: 0,
   species: {}, plantedSpecies: {},
+  seedsBought: 0, seedCoins: 0,
   coinsStart: null, coinsNow: null, coinsPeak: null,
   coinHistory: [],
 });

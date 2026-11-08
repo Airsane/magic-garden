@@ -3,6 +3,7 @@
 import { readAtom } from "./store";
 import { readPets, type Pet } from "./pets";
 import { clampPlayers } from "./pricing";
+import { seedOffers, type SeedOffer } from "./shop";
 import type { Tiles } from "./garden";
 
 /** Plodina v batohu. */
@@ -29,6 +30,8 @@ export interface GameSnapshot {
   pets: Pet[] | null;
   /** hráčů v místnosti 1–6 (bonus za přátele) */
   players: number;
+  /** semínka skladem v obchodě (aktuální restock) */
+  seedOffers: SeedOffer[];
 }
 
 interface MyData {
@@ -60,7 +63,7 @@ function ownedDirtTiles(map: GameMap | undefined, slotIdx: number): number[] | n
 }
 
 export async function readGame(): Promise<GameSnapshot> {
-  const [data, crops, seeds, map, slotIdx, inv, petsA, petsB, players] = await Promise.all([
+  const [data, crops, seeds, map, slotIdx, inv, petsA, petsB, players, roomState, mySlot] = await Promise.all([
     readAtom<MyData>("myDataAtom"),
     readAtom<CropItem[]>("myCropInventoryAtom"),
     readAtom<RawSeed[]>("mySeedInventoryAtom"),
@@ -70,6 +73,8 @@ export async function readGame(): Promise<GameSnapshot> {
     readAtom<unknown>("myPredictedPetSlotsAtom"),
     readAtom<unknown>("myPrimitivePetSlotsAtom"),
     readAtom<number>("numPlayersAtom"),
+    readAtom<unknown>("stateAtom"),
+    readAtom<unknown>("myUserSlotAtom"),
   ]);
   const coins = Number(data?.coinsCount ?? data?.coins);
   const seedMap: Record<string, number> = {};
@@ -88,5 +93,6 @@ export async function readGame(): Promise<GameSnapshot> {
     owned: ownedDirtTiles(map, Number(slotIdx)),
     pets: readPets(Array.isArray(petsA) ? petsA : petsB),
     players: clampPlayers(players),
+    seedOffers: seedOffers(roomState, mySlot),
   };
 }

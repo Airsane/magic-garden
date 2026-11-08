@@ -10,7 +10,7 @@ import { S, type Tab } from "./config";
 import type { GameSnapshot } from "./game/reader";
 
 const emptyGame = (): GameSnapshot => ({
-  tiles: null, coins: null, cropInv: null, cropItems: [], favorites: new Set(), seeds: {}, owned: null, pets: null, players: 1,
+  tiles: null, coins: null, cropInv: null, cropItems: [], favorites: new Set(), seeds: {}, owned: null, pets: null, players: 1, seedOffers: [],
 });
 
 export const state = {
@@ -23,6 +23,7 @@ export const state = {
   /** do kdy je sklizeň / sázení v pauze po neúspěchu (timestamp) */
   backoffHarvest: 0,
   backoffPlant: 0,
+  backoffBuy: 0,
   lastCycle: 0,
   /** otevřená záložka panelu */
   tab: (S.panel.tab || "overview") as Tab,
