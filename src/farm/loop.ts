@@ -18,12 +18,13 @@ export interface CycleOptions {
   harvest?: boolean;
   plant?: boolean;
   feed?: boolean;
+  /** výchozí = S.buyOn: vynucený běh (⚡, krmení) bez zapnutého nákupu nesmí utrácet */
   buy?: boolean;
   /** nakrmit jen tohoto mazlíčka jednou plodinou */
   petId?: string | null;
 }
 
-export async function cycle({ force = false, harvest = true, plant = true, feed = true, buy = true, petId = null }: CycleOptions = {}): Promise<void> {
+export async function cycle({ force = false, harvest = true, plant = true, feed = true, buy = S.buyOn, petId = null }: CycleOptions = {}): Promise<void> {
   if (state.running) return;
   state.running = true;
   state.lastCycle = Date.now();

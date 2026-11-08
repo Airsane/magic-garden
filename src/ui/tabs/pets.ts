@@ -44,7 +44,7 @@ function bindPetButtons(live: HTMLElement): void {
     b.dataset.bound = "1";
     b.addEventListener("click", () => {
       addLog("Ruční krmení");
-      cycle({ force: true, harvest: false, plant: false, feed: true, petId: b.dataset.feedpet! });
+      cycle({ force: true, harvest: false, plant: false, feed: true, buy: false, petId: b.dataset.feedpet! });
     });
   });
 }
