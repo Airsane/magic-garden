@@ -5,7 +5,9 @@ import type { GardenSummary } from "../../game/garden";
 import { state } from "../../state";
 import { drawToggleChips } from "../chips";
 import type { TabView } from "../tab";
-import { cb, num } from "../templates";
+import { allTime, session } from "../../stats";
+import { fmt } from "../../util/format";
+import { cb, num, row } from "../templates";
 
 function drawExcludeChips(root: HTMLElement, sum: GardenSummary | null): void {
   drawToggleChips({
@@ -22,6 +24,8 @@ export const harvestTab: TabView = {
   title: "Sklizeň",
   form: () => `
         <h4>Filtry sklizně</h4>
+        ${cb("journalOn", "📷 Zapisovat nové varianty do sbírky")}
+        <div class="muted" style="font-size:10.5px">Zralé plody s variantou, která ve sbírce chybí, se před sklizní zapíšou do deníku.</div>
         ${num("minSize", "Min. velikost (50–100)", 50, 100)}
         ${cb("skipPreserved", "Přeskočit preserved plody")}
         ${cb("onlyMutated", "Sklízet jen plody s mutací")}
@@ -39,7 +43,7 @@ export const harvestTab: TabView = {
         <div class="muted" style="font-size:10.5px">Změna se projeví po obnovení stránky (F5).</div>
         <div class="btns"><button class="btn" data-run="harvest">🌾 Sklidit teď</button></div>`,
   live({ live, root, sum, statusHTML }) {
-    live.innerHTML = statusHTML;
+    live.innerHTML = statusHTML + row("📷 Zapsáno do sbírky", `${fmt(session.logged)} · celkem ${fmt(allTime.logged)}`);
     drawExcludeChips(root, sum);
   },
 };

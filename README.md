@@ -1,7 +1,7 @@
 # Magic Garden – Auto Farm
 
 Tampermonkey userscript pro [Magic Garden](https://magicgarden.gg): automatická sklizeň,
-sázení, nákup semínek a krmení mazlíčků, mapa zahrady, hodnota pole, kalkulačka zisku, statistiky
+sázení, nákup semínek, krmení mazlíčků a zápis nových variant do sbírky, mapa zahrady, hodnota pole, kalkulačka zisku, statistiky
 a upozornění. Ovládá se plovoucím
 panelem ve hře (**Alt+H** ho skryje / zobrazí).
 
@@ -88,7 +88,7 @@ src/
   env.ts                 okno stránky, console log
   net/
     socket.ts            obalení WebSocketu, číslování commandSequence, sendCommand
-    commands.ts          herní příkazy (HarvestCrop, PlantSeed, FeedPet, SellAllCrops, PurchaseShopItem)
+    commands.ts          herní příkazy (HarvestCrop, PlantSeed, FeedPet, SellAllCrops, PurchaseShopItem, LogItem)
     keepalive.ts         držení spojení na pozadí (anti-AFK)
     visibility.ts        skutečná viditelnost záložky, důvod odpojení
   data/
@@ -104,12 +104,14 @@ src/
     growtimes.ts         doby růstu naučené ze zahrady
     profit.ts            zisk z pěstování, žebříček plodin
     shop.ts              obchod se semínky: sklad, plán nákupu, ověření, příkaz
+    journal.ts           deník: chybějící varianty plodů
   farm/
-    loop.ts              hlavní kolo (sklizeň → krmení → prodej → nákup → sázení), časovač
+    loop.ts              hlavní kolo (sbírka → sklizeň → krmení → prodej → nákup → sázení), časovač
     harvest.ts           sklizeň
     plant.ts             sázení
     feed.ts              krmení
     buy.ts               nákup semínek jednorázových rostlin
+    journal.ts           zápis plodů do sbírky
   ui/
     panel.ts             kostra panelu, přepínače, záložky, vykreslování, tick
     tab.ts               rozhraní záložky (TabView)

@@ -21,7 +21,7 @@
 2. **Čtení**: `readGame()` poskládá z jotai atomů jeden `GameSnapshot`
    (zahrada, batoh, semínka, mapa, mazlíčci, mince).
 3. **Akce**: každých `intervalSec` sekund proběhne `cycle()`:
-   sklizeň → krmení → (prodej) → nákup semínek → sázení. Každá akce se po odeslání **ověří**
+   zápis do sbírky → sklizeň → krmení → (prodej) → nákup semínek → sázení. Každá akce se po odeslání **ověří**
    novým čtením hry (co se nesklidilo / nezasadilo, se počítá jako neúspěch
    a po úplném neúspěchu následuje 1 min pauza).
 4. **UI**: `tick()` každou sekundu obnoví `state.game`, statistiky mincí
@@ -48,9 +48,22 @@ Posílané příkazy (`net/commands.ts`):
 | `PlantSeed` | `slot`, `species` |
 | `FeedPet` | `petItemId`, `cropItemId` |
 | `SellAllCrops` | – |
+| `LogItem` | `target: { kind: "growSlot", slot, slotsIndex }` – zápis plodu do sbírky |
 | `PurchaseShopItem` | `shop: "seed"`, `viewMode` (`"list"`/`"grid"` z localStorage hry), `item: { itemType: "Seed", species }`, `quantity?` (jen > 1) |
 
 Mimo `QuinoaCommand` posílá anti-AFK ještě `PlayerPosition` (bez čísla).
+
+## Sbírka (deník)
+
+Foťák ve hře pošle `TakePhoto` (jen záblesk) a za každý plod v záběru s novou
+variantou `LogItem`. Do deníku zapisuje jen `LogItem`; server nekontroluje, jestli
+hráč drží foťák, takže `TakePhoto` neposíláme. Odpověď: `QuinoaCommandResult`
+s `payload: { journalType: "Produce", speciesId, variants }`. Deník je
+`myDataAtom.journal.produce[druh].variantsLogged[].variant`.
+
+`farm/journal.ts` zapíše zralé plody s chybějící variantou před sklizní a ověří to
+novým čtením deníku. Nezapsaný plod se v daném kole nesklidí ani nesní ze zahrady,
+nejvýš 3 neúspěšné pokusy (`MAX_LOG_ATTEMPTS`), pak se uvolní.
 
 ## Data hry (`game/`)
 
@@ -60,7 +73,7 @@ hledají podle `debugLabel` v `window.jotaiAtomCache`:
 
 | Atom | Co z něj čteme |
 | --- | --- |
-| `myDataAtom` | mince, `garden.tileObjects` (políčka zahrady) |
+| `myDataAtom` | mince, `garden.tileObjects` (políčka zahrady), `journal` (sbírka) |
 | `myCropInventoryAtom` | plodiny v batohu |
 | `mySeedInventoryAtom` | semínka v batohu |
 | `myInventoryAtom` | `favoritedItemIds` (oblíbené se nikdy nekrmí) |

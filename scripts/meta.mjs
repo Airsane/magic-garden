@@ -4,7 +4,7 @@
 export const meta = {
   name: "Magic Garden – Auto Farm",
   namespace: "mg-autoharvest",
-  description: "Automatická sklizeň, sázení a krmení mazlíčků, mapa zahrady, statistiky, upozornění.",
+  description: "Automatická sklizeň, sázení, krmení mazlíčků a zápis do sbírky, mapa zahrady, statistiky, upozornění.",
   match: [
     "https://magicgarden.gg/r/*",
     "https://magiccircle.gg/r/*",
