@@ -1,4 +1,4 @@
-// Stáhne katalog rostlin a mutací z veřejného API a uloží ho do src/data/catalog-data.json.
+// Stáhne katalog rostlin, mutací a mazlíčků z veřejného API a uloží ho do src/data/catalog-data.json.
 // Ukládají se jen pole, která skript potřebuje (ceny, velikost, sklizeň, doby).
 // Použití: node scripts/update-catalog.mjs
 
@@ -34,6 +34,13 @@ function plant(species, raw) {
   };
 }
 
+function pet(species, raw) {
+  const diet = Array.isArray(raw?.diet) ? raw.diet.filter((d) => typeof d === "string") : [];
+  const max = num(raw?.coinsToFullyReplenishHunger);
+  if (max == null || max <= 0) return null;
+  return { species, name: String(raw?.name || species), diet, max };
+}
+
 function mutation(key, raw) {
   const mult = num(raw?.coinMultiplier);
   if (mult == null || !GROUPS.has(raw?.group)) return null;
@@ -41,14 +48,16 @@ function mutation(key, raw) {
 }
 
 try {
-  const [plantsRaw, mutationsRaw] = await Promise.all([get("plants"), get("mutations")]);
+  const [plantsRaw, mutationsRaw, petsRaw] = await Promise.all([get("plants"), get("mutations"), get("pets")]);
   const plants = {};
   for (const [k, v] of Object.entries(plantsRaw)) { const p = plant(k, v); if (p) plants[k] = p; }
   const mutations = {};
   for (const [k, v] of Object.entries(mutationsRaw)) { const m = mutation(k, v); if (m) mutations[k] = m; }
-  const data = { source: API, fetchedAt: new Date().toISOString(), plants, mutations };
+  const pets = {};
+  for (const [k, v] of Object.entries(petsRaw)) { const p = pet(k, v); if (p) pets[k] = p; }
+  const data = { source: API, fetchedAt: new Date().toISOString(), plants, mutations, pets };
   writeFileSync(OUT, JSON.stringify(data, null, 2) + "\n");
-  console.log(`${Object.keys(plants).length} rostlin, ${Object.keys(mutations).length} mutací → ${OUT}`);
+  console.log(`${Object.keys(plants).length} rostlin, ${Object.keys(mutations).length} mutací, ${Object.keys(pets).length} mazlíčků → ${OUT}`);
 } catch (e) {
   console.error("Katalog se nepodařilo stáhnout:", e.message);
   process.exit(1);

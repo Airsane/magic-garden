@@ -1,6 +1,6 @@
 {
   "source": "https://mg-api.ariedam.fr/data",
-  "fetchedAt": "2026-11-05T15:15:47.559Z",
+  "fetchedAt": "2026-11-09T08:35:56.454Z",
   "plants": {
     "Carrot": {
       "species": "Carrot",
@@ -799,6 +799,355 @@
       "name": "Thundercharged",
       "group": "Hydro",
       "mult": 7
+    }
+  },
+  "pets": {
+    "Worm": {
+      "species": "Worm",
+      "name": "Worm",
+      "diet": [
+        "Strawberry",
+        "Carrot",
+        "Tomato",
+        "Apple",
+        "Aloe"
+      ],
+      "max": 500
+    },
+    "Snail": {
+      "species": "Snail",
+      "name": "Snail",
+      "diet": [
+        "Blueberry",
+        "Tomato",
+        "Corn",
+        "Daffodil",
+        "Chrysanthemum"
+      ],
+      "max": 1000
+    },
+    "Bee": {
+      "species": "Bee",
+      "name": "Bee",
+      "diet": [
+        "Strawberry",
+        "Blueberry",
+        "Daffodil",
+        "Chrysanthemum",
+        "Lily"
+      ],
+      "max": 1500
+    },
+    "Chicken": {
+      "species": "Chicken",
+      "name": "Chicken",
+      "diet": [
+        "Corn",
+        "Aloe",
+        "Watermelon",
+        "Pumpkin"
+      ],
+      "max": 3000
+    },
+    "Bunny": {
+      "species": "Bunny",
+      "name": "Bunny",
+      "diet": [
+        "Strawberry",
+        "Carrot",
+        "Blueberry",
+        "Apple",
+        "OrangeTulip"
+      ],
+      "max": 750
+    },
+    "Dragonfly": {
+      "species": "Dragonfly",
+      "name": "Dragonfly",
+      "diet": [
+        "Apple",
+        "OrangeTulip",
+        "Echeveria"
+      ],
+      "max": 250
+    },
+    "Pig": {
+      "species": "Pig",
+      "name": "Pig",
+      "diet": [
+        "Watermelon",
+        "Pumpkin",
+        "Mushroom",
+        "Bamboo",
+        "Eggplant"
+      ],
+      "max": 50000
+    },
+    "Cow": {
+      "species": "Cow",
+      "name": "Cow",
+      "diet": [
+        "Coconut",
+        "Banana",
+        "BurrosTail",
+        "Mushroom"
+      ],
+      "max": 25000
+    },
+    "Turkey": {
+      "species": "Turkey",
+      "name": "Turkey",
+      "diet": [
+        "FavaBean",
+        "Corn",
+        "Squash"
+      ],
+      "max": 500
+    },
+    "Squirrel": {
+      "species": "Squirrel",
+      "name": "Squirrel",
+      "diet": [
+        "Banana",
+        "Pumpkin",
+        "Grape"
+      ],
+      "max": 15000
+    },
+    "Turtle": {
+      "species": "Turtle",
+      "name": "Turtle",
+      "diet": [
+        "Watermelon",
+        "BurrosTail",
+        "Pepper",
+        "Bamboo"
+      ],
+      "max": 100000
+    },
+    "Goat": {
+      "species": "Goat",
+      "name": "Goat",
+      "diet": [
+        "Coconut",
+        "Pumpkin",
+        "Camellia",
+        "Pepper",
+        "PassionFruit"
+      ],
+      "max": 20000
+    },
+    "SnowFox": {
+      "species": "SnowFox",
+      "name": "Snow Fox",
+      "diet": [
+        "Squash",
+        "Echeveria",
+        "Grape"
+      ],
+      "max": 14000
+    },
+    "Stoat": {
+      "species": "Stoat",
+      "name": "Stoat",
+      "diet": [
+        "Banana",
+        "Pepper",
+        "Cactus"
+      ],
+      "max": 10000
+    },
+    "WhiteCaribou": {
+      "species": "WhiteCaribou",
+      "name": "Caribou",
+      "diet": [
+        "Camellia",
+        "BurrosTail",
+        "Mushroom"
+      ],
+      "max": 30000
+    },
+    "Pony": {
+      "species": "Pony",
+      "name": "Pony",
+      "diet": [
+        "Pear",
+        "Coconut",
+        "Beet"
+      ],
+      "max": 4000
+    },
+    "Sheep": {
+      "species": "Sheep",
+      "name": "Sheep",
+      "diet": [
+        "Clover",
+        "FavaBean",
+        "Cabbage",
+        "FourLeafClover"
+      ],
+      "max": 250
+    },
+    "Horse": {
+      "species": "Horse",
+      "name": "Horse",
+      "diet": [
+        "Squash",
+        "Echeveria",
+        "Gentian"
+      ],
+      "max": 25000
+    },
+    "Ostrich": {
+      "species": "Ostrich",
+      "name": "Ostrich",
+      "diet": [
+        "Peach",
+        "Eggplant",
+        "Date",
+        "VioletCort"
+      ],
+      "max": 40000
+    },
+    "FireHorse": {
+      "species": "FireHorse",
+      "name": "Fire Horse",
+      "diet": [
+        "DragonFruit",
+        "Poinsettia",
+        "Cacao"
+      ],
+      "max": 200000
+    },
+    "Rooster": {
+      "species": "Rooster",
+      "name": "Rooster",
+      "diet": [
+        "Corn",
+        "Daisy",
+        "Habanero",
+        "Cardoon"
+      ],
+      "max": 1000
+    },
+    "RedFox": {
+      "species": "RedFox",
+      "name": "Red Fox",
+      "diet": [
+        "Peach",
+        "Persimmon",
+        "PricklyPear",
+        "VioletCort"
+      ],
+      "max": 75000
+    },
+    "Phoenix": {
+      "species": "Phoenix",
+      "name": "Phoenix",
+      "diet": [
+        "DragonFruit",
+        "Saffron",
+        "Cacao",
+        "Marigold",
+        "Milkcap"
+      ],
+      "max": 300000
+    },
+    "Butterfly": {
+      "species": "Butterfly",
+      "name": "Butterfly",
+      "diet": [
+        "Daffodil",
+        "Lemon",
+        "Grape",
+        "Lily",
+        "Sunflower"
+      ],
+      "max": 25000
+    },
+    "Peacock": {
+      "species": "Peacock",
+      "name": "Peacock",
+      "diet": [
+        "Lychee",
+        "Cactus",
+        "Sunflower"
+      ],
+      "max": 100000
+    },
+    "Capybara": {
+      "species": "Capybara",
+      "name": "Capybara",
+      "diet": [
+        "Lemon",
+        "PassionFruit",
+        "DragonFruit",
+        "Lychee"
+      ],
+      "max": 150000
+    },
+    "Bat": {
+      "species": "Bat",
+      "name": "Bat",
+      "diet": [
+        "Clover",
+        "Cabbage",
+        "Delphinium"
+      ],
+      "max": 300
+    },
+    "Platypus": {
+      "species": "Platypus",
+      "name": "Platypus",
+      "diet": [
+        "Cattail",
+        "Pear",
+        "Leek"
+      ],
+      "max": 10000
+    },
+    "ThunderWolf": {
+      "species": "ThunderWolf",
+      "name": "Thunder Wolf",
+      "diet": [
+        "PricklyPear",
+        "Date",
+        "DragonFruit"
+      ],
+      "max": 150000
+    },
+    "Moth": {
+      "species": "Moth",
+      "name": "Moth",
+      "diet": [
+        "Lavender",
+        "Lily",
+        "GhostPlant",
+        "Saffron"
+      ],
+      "max": 50000
+    },
+    "Snake": {
+      "species": "Snake",
+      "name": "Snake",
+      "diet": [
+        "Foxfire",
+        "PricklyPear",
+        "Cardoon",
+        "Cactus"
+      ],
+      "max": 100000
+    },
+    "Toad": {
+      "species": "Toad",
+      "name": "Toad",
+      "diet": [
+        "Leek",
+        "Persimmon",
+        "Habanero",
+        "DeadlyNightshade"
+      ],
+      "max": 75000
     }
   }
 }

@@ -92,13 +92,13 @@ src/
     keepalive.ts         držení spojení na pozadí (anti-AFK)
     visibility.ts        skutečná viditelnost záložky, důvod odpojení
   data/
-    catalog.ts           katalog rostlin a mutací (ceny, velikost, sklizeň)
+    catalog.ts           katalog rostlin, mutací a mazlíčků (ceny, sklizeň, co kdo jí)
     catalog-data.json    snímek katalogu (generuje update-catalog.mjs)
   game/
     store.ts             nalezení jotai store hry, readAtom()
     reader.ts            readGame() – snímek stavu hry z atomů
     garden.ts            plody, zralost, filtry sklizně, souhrn zahrady
-    pets.ts              katalog mazlíčků, převod dat mazlíčků
+    pets.ts              převod dat mazlíčků ze hry
     pricing.ts           cena plodu (velikost, mutace, bonus za hráče)
     value.ts             hodnota pole a batohu
     growtimes.ts         doby růstu naučené ze zahrady

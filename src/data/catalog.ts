@@ -1,4 +1,4 @@
-// Katalog rostlin a mutací – snímek veřejného API přibalený do skriptu.
+// Katalog rostlin, mutací a mazlíčků – snímek veřejného API přibalený do skriptu.
 // Obnovení: node scripts/update-catalog.mjs (za běhu hry se nic nestahuje).
 
 import data from "./catalog-data.json";
@@ -30,6 +30,15 @@ export interface MutationInfo {
   mult: number;
 }
 
+export interface PetInfo {
+  species: string;
+  name: string;
+  /** plodiny, které mazlíček jí */
+  diet: string[];
+  /** plná sytost (coinsToFullyReplenishHunger) */
+  max: number;
+}
+
 const plants = Object.values(data.plants as Record<string, PlantInfo>);
 const mutations = Object.values(data.mutations as Record<string, MutationInfo>);
 
@@ -39,12 +48,16 @@ for (const m of mutations) {
   mutationIdx.set(m.key.toLowerCase(), m);
   mutationIdx.set(m.name.toLowerCase(), m);
 }
+const petIdx = new Map(Object.values(data.pets as Record<string, PetInfo>).map((p) => [p.species.toLowerCase(), p]));
 const sorted = [...plants].sort((a, b) => a.name.localeCompare(b.name));
 
 export const plantInfo = (species: string): PlantInfo | null =>
   plantIdx.get(String(species).trim().toLowerCase()) ?? null;
 
 export const allPlants = (): PlantInfo[] => sorted;
+
+export const petInfo = (species: string): PetInfo | null =>
+  petIdx.get(String(species).trim().toLowerCase()) ?? null;
 
 export const mutationInfo = (keyOrName: string): MutationInfo | null =>
   mutationIdx.get(String(keyOrName).trim().toLowerCase()) ?? null;

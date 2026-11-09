@@ -93,7 +93,7 @@ přátelé  = 1 + 0,1 × (hráčů − 1), hráčů 1–6
 Mutace se poznají podle klíče i jména (`Ambershine` = `Amberlit`). Neznámý druh má
 cenu 0. Vzorec je zjištěný z Aries Mod, kód je vlastní.
 
-- **Katalog** (`data/catalog.ts`) je snímek veřejného API `mg-api.ariedam.fr`
+- **Katalog** (`data/catalog.ts`) – rostliny, mutace a mazlíčci (co jedí, plná sytost) – je snímek veřejného API `mg-api.ariedam.fr`
   v `data/catalog-data.json`. Za běhu se nic nestahuje; obnova:
   `node scripts/update-catalog.mjs`.
 - **Hodnota pole** (`game/value.ts`) – zralé, podle filtrů sklizně, celé pole
