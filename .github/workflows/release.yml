@@ -1,0 +1,42 @@
+# Release: push tagu vX.Y.Z → kontroly, testy, build a GitHub release se skriptem.
+# Tampermonkey si novou verzi stáhne sám přes @updateURL / @downloadURL
+# (…/releases/latest/download/…), viz scripts/meta.mjs.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Tag odpovídá verzi v package.json
+        run: |
+          v=$(node -p "require('./package.json').version")
+          if [ "v$v" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME neodpovídá verzi v package.json ($v)"
+            exit 1
+          fi
+
+      - run: npm ci --no-audit --no-fund
+
+      - name: Kontroly, testy a build
+        run: ./build.sh
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            dist/mg-autoharvest.user.js
+            dist/mg-autoharvest.meta.js

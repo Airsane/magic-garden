@@ -1,6 +1,11 @@
 // Hlavička userscriptu (==UserScript==). Verze se bere z package.json.
 // Každý klíč se vypíše jako `// @klíč hodnota`, pole se vypíše jako více řádků.
 
+// Hotový skript se stahuje z posledního GitHub releasu (sestaví ho .github/workflows/release.yml).
+// Tampermonkey podle @updateURL kontroluje novou verzi (stačí malá hlavička .meta.js).
+const REPO = "https://github.com/Airsane/magic-garden";
+const LATEST = `${REPO}/releases/latest/download`;
+
 export const meta = {
   name: "Magic Garden – Auto Farm",
   namespace: "mg-autoharvest",
@@ -11,6 +16,10 @@ export const meta = {
     "https://starweaver.org/r/*",
   ],
   // document-start: WebSocket se musí obalit dřív, než ho hra vytvoří.
+  homepageURL: REPO,
+  supportURL: `${REPO}/issues`,
+  updateURL: `${LATEST}/mg-autoharvest.meta.js`,
+  downloadURL: `${LATEST}/mg-autoharvest.user.js`,
   "run-at": "document-start",
   // Skript musí běžet v kontextu stránky, aby viděl window.WebSocket a jotai store hry.
   "inject-into": "page",

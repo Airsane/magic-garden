@@ -9,9 +9,26 @@ panelem ve hře (**Alt+H** ho skryje / zobrazí).
 
 ## Instalace (pro hráče)
 
-1. Sestav skript (viz níže), nebo vezmi hotový `dist/mg-autoharvest.user.js`.
-2. V Tampermonkey: *Dashboard → Utilities → Import from file*, nebo soubor přetáhni do prohlížeče.
+1. Nainstaluj rozšíření [Tampermonkey](https://www.tampermonkey.net/) (Chrome, Firefox, Edge…).
+   V Chrome / Edge zapni v nastavení rozšíření **Allow User Scripts** (příp. režim pro vývojáře),
+   jinak Tampermonkey skripty nespustí.
+2. Otevři odkaz
+   **<https://github.com/Airsane/magic-garden/releases/latest/download/mg-autoharvest.user.js>**
+   – Tampermonkey ukáže stránku s instalací, klikni **Instalovat**.
 3. Otevři hru (`https://magicgarden.gg/r/...`) – vpravo nahoře se objeví panel 🌻 Auto Farm.
+
+### Aktualizace
+
+Skript má v hlavičce `@updateURL` a `@downloadURL` na poslední release, takže se
+**aktualizuje sám** – Tampermonkey nové verze kontroluje jednou denně (výchozí nastavení).
+
+- Hned teď: *Tampermonkey → Dashboard → zaškrtni skript → Trigger update*, nebo
+  *Utilities → Check for userscript updates*.
+- Interval: *Dashboard → Settings → (Config mode: Advanced) → Externals → Update interval*.
+- Automatická aktualizace funguje jen u skriptu nainstalovaného z odkazu výše. Starou verzi
+  naimportovanou ze souboru smaž a nainstaluj znovu z odkazu (nastavení ve hře zůstane –
+  ukládá se v `localStorage` hry, ne ve skriptu).
+- Když skript v Tampermonkey ručně upravíš, aktualizace se pro něj vypnou.
 
 ## Build
 
@@ -31,6 +48,23 @@ Výsledek: `dist/mg-autoharvest.user.js` (jeden soubor i s hlavičkou `==UserScr
 | `./build.sh --no-check` | jen build, bez kontrol |
 | `npm run typecheck` | jen kontroly typů a cyklů |
 | `npm test` | jen testy (vitest, `test/*.test.ts`) |
+
+## Vydání nové verze
+
+Build a release dělá GitHub Actions (`.github/workflows/release.yml`) po pushnutí tagu:
+
+```bash
+npm version 2.6.0 --no-git-tag-version   # nebo ručně upravit "version" v package.json
+git commit -am "chore: v2.6.0"
+git tag v2.6.0
+git push origin main v2.6.0
+```
+
+Workflow ověří, že tag odpovídá verzi v `package.json`, spustí kontroly a testy (`./build.sh`)
+a vytvoří release s `mg-autoharvest.user.js` a `mg-autoharvest.meta.js`. Hráčům se nová verze
+stáhne sama. Kontroly a testy běží i při každém pushi (`.github/workflows/ci.yml`).
+Verze z `package.json` se propíše do hlavičky i do logu v konzoli; ostatní metadata hlavičky
+(`@match`, `@updateURL`…) jsou v [`scripts/meta.mjs`](scripts/meta.mjs).
 
 ## Vývoj
 
@@ -63,19 +97,16 @@ Ceny plodin, semínek a násobitele mutací jsou ve snímku `src/data/catalog-da
 node scripts/update-catalog.mjs
 ```
 
-### Vydání
-
-Vydání nové verze: zvyš `version` v `package.json` (propíše se do hlavičky i do logu
-v konzoli) a spusť `./build.sh`. Metadata hlavičky (`@match`, `@run-at`…) jsou
-v [`scripts/meta.mjs`](scripts/meta.mjs).
-
 ## Struktura
 
 ```
 build.sh                 vstupní bod buildu
+.github/workflows/
+  ci.yml                 kontroly a testy při pushi
+  release.yml            tag vX.Y.Z → build a GitHub release
 scripts/
-  build.mjs              esbuild: src/main.ts → dist/mg-autoharvest.user.js
-  meta.mjs               hlavička ==UserScript==
+  build.mjs              esbuild: src/main.ts → dist/mg-autoharvest.user.js (+ .meta.js)
+  meta.mjs               hlavička ==UserScript== (vč. @updateURL / @downloadURL)
   check-cycles.mjs       kontrola cyklických importů
   update-catalog.mjs     obnovení katalogu rostlin a mutací z API
 src/

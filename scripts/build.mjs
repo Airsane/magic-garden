@@ -1,13 +1,15 @@
-// Sestaví src/main.ts do jednoho souboru dist/mg-autoharvest.user.js.
+// Sestaví src/main.ts do jednoho souboru dist/mg-autoharvest.user.js (+ hlavička dist/mg-autoharvest.meta.js).
 // Použití: node scripts/build.mjs [--watch] [--minify]
 
-import { readFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import * as esbuild from "esbuild";
 import { renderMeta } from "./meta.mjs";
 
 const args = new Set(process.argv.slice(2));
 const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
 const outfile = "dist/mg-autoharvest.user.js";
+// Jen hlavička – Tampermonkey z ní při kontrole aktualizací čte @version.
+const metafile = "dist/mg-autoharvest.meta.js";
 
 /** @type {import("esbuild").BuildOptions} */
 const options = {
@@ -33,3 +35,5 @@ if (args.has("--watch")) {
 } else {
   await esbuild.build(options);
 }
+mkdirSync("dist", { recursive: true });
+writeFileSync(metafile, renderMeta(pkg.version));
