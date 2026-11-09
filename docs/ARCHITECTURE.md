@@ -63,7 +63,8 @@ s `payload: { journalType: "Produce", speciesId, variants }`. Deník je
 
 `farm/journal.ts` zapíše zralé plody s chybějící variantou před sklizní a ověří to
 novým čtením deníku. Nezapsaný plod se v daném kole nesklidí ani nesní ze zahrady,
-nejvýš 3 neúspěšné pokusy (`MAX_LOG_ATTEMPTS`), pak se uvolní.
+nejvýš 3 neúspěšné pokusy za druh + variantu (`MAX_LOG_ATTEMPTS`), pak se varianta
+do obnovení stránky vzdá. Bez načteného deníku se zápis přeskočí.
 
 ## Data hry (`game/`)
 

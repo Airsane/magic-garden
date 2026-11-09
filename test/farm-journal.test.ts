@@ -15,8 +15,8 @@ const { doLogCrops, isHeldForJournal } = await import("../src/farm/journal");
 type Snap = Parameters<typeof doLogCrops>[0];
 
 /** Zralý Squash s mutací Thunderstruck na políčku 56, slot 1. `end` odliší plody mezi testy. */
-const snap = (journal: unknown, end: number) => ({
-  tiles: { 56: { objectType: "plant", species: "Squash", slots: [{ slotId: 1, species: "Squash", endTime: end, mutations: ["Thunderstruck"] }] } },
+const snap = (journal: unknown, end: number, mutation = "Thunderstruck") => ({
+  tiles: { 56: { objectType: "plant", species: "Squash", slots: [{ slotId: 1, species: "Squash", endTime: end, mutations: [mutation] }] } },
   journal,
 }) as unknown as Snap;
 const crop56 = (end: number) => allSlots(snap({}, end).tiles)[0]!;
@@ -37,20 +37,41 @@ describe("doLogCrops", () => {
   });
 
   it("releases a crop after three failed attempts", async () => {
-    vi.mocked(readGame).mockResolvedValue(snap({}, 2));
-    for (let i = 0; i < 2; i++) { await doLogCrops(snap({}, 2), false); expect(isHeldForJournal(crop56(2))).toBe(true); }
-    await doLogCrops(snap({}, 2), false);
-    expect(isHeldForJournal(crop56(2))).toBe(false);
+    vi.mocked(readGame).mockResolvedValue(snap({}, 2, "Gold"));
+    const c = allSlots(snap({}, 2, "Gold").tiles)[0]!;
+    for (let i = 0; i < 2; i++) { await doLogCrops(snap({}, 2, "Gold"), false); expect(isHeldForJournal(c)).toBe(true); }
+    await doLogCrops(snap({}, 2, "Gold"), false);
+    expect(isHeldForJournal(c)).toBe(false);
     vi.mocked(cmdLogItem).mockClear();
-    await doLogCrops(snap({}, 2), false);
-    expect(cmdLogItem).toHaveBeenCalledTimes(1);
-    expect(isHeldForJournal(crop56(2))).toBe(false);
+    await doLogCrops(snap({}, 2, "Gold"), false);
+    expect(cmdLogItem).not.toHaveBeenCalled();
+    expect(isHeldForJournal(c)).toBe(false);
   });
 
   it("does not count unsent crops when offline", async () => {
     vi.mocked(cmdLogItem).mockReturnValue(false);
-    for (let i = 0; i < 3; i++) await doLogCrops(snap({}, 3), false);
-    expect(isHeldForJournal(crop56(3))).toBe(true);
+    for (let i = 0; i < 3; i++) await doLogCrops(snap({}, 3, "Wet"), false);
+    expect(isHeldForJournal(allSlots(snap({}, 3, "Wet").tiles)[0]!)).toBe(true);
+  });
+
+  it("a given-up variant releases sibling crops", async () => {
+    const two = {
+      tiles: { 56: { objectType: "plant", species: "Squash", slots: [
+        { slotId: 0, species: "Squash", endTime: 5, mutations: ["Rainbow"] },
+        { slotId: 1, species: "Squash", endTime: 5, mutations: ["Rainbow"] },
+      ] } },
+      journal: {},
+    } as unknown as Snap;
+    vi.mocked(readGame).mockResolvedValue(two);
+    for (let i = 0; i < 3; i++) await doLogCrops(two, false);
+    expect(cmdLogItem).toHaveBeenCalledTimes(3);
+    expect(allSlots(two.tiles).some(isHeldForJournal)).toBe(false);
+  });
+
+  it("skips logging when the journal is missing", async () => {
+    expect(await doLogCrops(snap(null, 6, "Frozen"), false)).toBe(0);
+    expect(cmdLogItem).not.toHaveBeenCalled();
+    expect(isHeldForJournal(allSlots(snap(null, 6, "Frozen").tiles)[0]!)).toBe(false);
   });
 
   it("does nothing when the journal setting is off", async () => {

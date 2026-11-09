@@ -10,7 +10,7 @@ export const JOURNAL_VARIANTS: readonly string[] = [
   "Gold", "Rainbow", "Dawncharged", "Ambercharged", "Thundercharged", "Max Weight",
 ];
 
-/** Po tolika neúspěšných pokusech o zápis se plod uvolní ke sklizni. */
+/** Po tolika neúspěšných pokusech se varianta druhu vzdá a její plody se uvolní ke sklizni. */
 export const MAX_LOG_ATTEMPTS = 3;
 
 /** `myDataAtom.journal` – jen část, kterou čteme. */
@@ -36,35 +36,40 @@ export function missingVariants(c: Pick<Crop, "species" | "mutations">, journal:
   return cropVariants(c).filter((v) => !have.has(v));
 }
 
-/** Klíč počítadla pokusů – nový plod na stejném místě má jiný `end`. */
+/** Klíč počítadla pokusů: druh + varianta. */
+export const variantKey = (species: string, variant: string): string => `${species}|${variant}`;
+
+/** Identita plodu pro sadu zadržených – nový plod na stejném místě má jiný `end`. */
 export const attemptKey = (c: Pick<Crop, "tileIndex" | "slotsIndex" | "end">): string =>
   `${c.tileIndex}:${c.slotsIndex}:${c.end}`;
 
 /**
  * Zralé plody s chybějící variantou, nejvýš `max`. Plod se vynechá, když všechny
- * jeho chybějící varianty už pokrývá dřív vybraný plod stejného druhu.
+ * jeho chybějící varianty už pokrývá dřív vybraný plod stejného druhu nebo jsou vzdané (`gaveUp`).
  */
-export function pickLogTargets(crops: readonly Crop[], journal: Journal | null, now: number, max: number): Crop[] {
+export function pickLogTargets(
+  crops: readonly Crop[], journal: Journal | null, now: number, max: number, gaveUp: ReadonlySet<string> = new Set(),
+): Crop[] {
   const out: Crop[] = [];
   const covered = new Set<string>();
   for (const c of crops) {
     if (out.length >= max) break;
     if (!isRipe(c, now)) continue;
-    const missing = missingVariants(c, journal).filter((v) => !covered.has(c.species + "|" + v));
-    if (!missing.length) continue;
-    missing.forEach((v) => covered.add(c.species + "|" + v));
+    const keys = missingVariants(c, journal).map((v) => variantKey(c.species, v)).filter((k) => !covered.has(k) && !gaveUp.has(k));
+    if (!keys.length) continue;
+    keys.forEach((k) => covered.add(k));
     out.push(c);
   }
   return out;
 }
 
-/** Klíče zralých plodů s chybějící variantou a méně než MAX_LOG_ATTEMPTS pokusy. */
+/** attemptKey zralých plodů s chybějící variantou, která má méně než MAX_LOG_ATTEMPTS neúspěchů. */
 export function heldCrops(crops: readonly Crop[], journal: Journal | null, now: number, attempts: ReadonlyMap<string, number>): Set<string> {
   const out = new Set<string>();
   for (const c of crops) {
-    if (!isRipe(c, now) || !missingVariants(c, journal).length) continue;
-    const key = attemptKey(c);
-    if ((attempts.get(key) || 0) < MAX_LOG_ATTEMPTS) out.add(key);
+    if (!isRipe(c, now)) continue;
+    const open = missingVariants(c, journal).some((v) => (attempts.get(variantKey(c.species, v)) || 0) < MAX_LOG_ATTEMPTS);
+    if (open) out.add(attemptKey(c));
   }
   return out;
 }

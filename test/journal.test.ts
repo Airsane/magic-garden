@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Crop } from "../src/game/garden";
-import { attemptKey, cropVariants, heldCrops, missingVariants, pickLogTargets, type Journal } from "../src/game/journal";
+import { attemptKey, cropVariants, heldCrops, missingVariants, pickLogTargets, variantKey, type Journal } from "../src/game/journal";
 
 const crop = (o: Partial<Crop>): Crop => ({
   tileIndex: 1, slotsIndex: 0, species: "Squash", start: 0, end: 1000, mutations: [], size: 100, preserved: false, ...o,
@@ -38,19 +38,30 @@ describe("log targets", () => {
     const c = crop({ tileIndex: 3, mutations: ["Gold", "Wet"] });
     expect(pickLogTargets([a, b, c], j, 2000, 10)).toEqual([a, c]);
   });
+  it("skips given-up variants", () => {
+    const a = crop({ tileIndex: 1, mutations: ["Gold"] });
+    const c = crop({ tileIndex: 3, mutations: ["Gold", "Wet"] });
+    const gaveUp = new Set([variantKey("Squash", "Gold")]);
+    expect(pickLogTargets([a, c], j, 2000, 10, gaveUp)).toEqual([c]);
+  });
 });
 
 describe("held crops", () => {
-  it("holds missing crops until three attempts", () => {
+  const gold = variantKey("Squash", "Gold");
+  it("holds missing crops until their variant fails three times", () => {
     const a = crop({ mutations: ["Gold"] });
     expect(heldCrops([a], j, 2000, new Map())).toEqual(new Set([attemptKey(a)]));
-    expect(heldCrops([a], j, 2000, new Map([[attemptKey(a), 2]])).size).toBe(1);
-    expect(heldCrops([a], j, 2000, new Map([[attemptKey(a), 3]])).size).toBe(0);
+    expect(heldCrops([a], j, 2000, new Map([[gold, 2]])).size).toBe(1);
+    expect(heldCrops([a], j, 2000, new Map([[gold, 3]])).size).toBe(0);
     expect(heldCrops([crop({})], j, 2000, new Map()).size).toBe(0);
   });
-  it("a new crop on the same slot starts with no attempts", () => {
-    const old = crop({ mutations: ["Gold"], end: 1000 });
-    const fresh = crop({ mutations: ["Gold"], end: 1500 });
-    expect(heldCrops([fresh], j, 2000, new Map([[attemptKey(old), 3]])).size).toBe(1);
+  it("a given-up variant releases every crop that has it", () => {
+    const a = crop({ tileIndex: 1, mutations: ["Gold"] });
+    const b = crop({ tileIndex: 2, mutations: ["Gold"] });
+    expect(heldCrops([a, b], j, 2000, new Map([[gold, 3]])).size).toBe(0);
+  });
+  it("still holds a crop for another missing variant", () => {
+    const a = crop({ mutations: ["Gold", "Wet"] });
+    expect(heldCrops([a], j, 2000, new Map([[gold, 3]]))).toEqual(new Set([attemptKey(a)]));
   });
 });

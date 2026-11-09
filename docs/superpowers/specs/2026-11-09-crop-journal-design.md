@@ -52,11 +52,14 @@ Rozhodnutí z brainstormingu:
 - **Ochrana plodu:** plod s chybějící variantou, který má méně než 3 neúspěšné
   pokusy, se nesklidí (`doHarvest`) a nesní se ze zahrady (`feedFromGarden`).
   Neúspěšný pokus = příkaz odešel, ale chybějící varianta v deníku nepřibyla.
-  Po 3. neúspěchu se plod uvolní a do logu jde varování
-  `📷 Nepodařilo se zapsat Squash (Thunderstruck) – sklidím ho normálně`.
-- Počítadlo pokusů je podle `políčko:slot:endTime`, takže nový plod na stejném
-  místě začíná od nuly. Klíče plodů, které už na poli nejsou, se při každém běhu
-  zahodí.
+- Pokusy se počítají za **druh + variantu** (ne za jednotlivý plod), protože se
+  v kole posílá jen jeden plod od varianty. Po 3. neúspěchu se varianta do
+  obnovení stránky vzdá: uvolní se všechny její plody, nic dalšího se nezkouší a
+  do logu jde jednou varování
+  `📷 Nepodařilo se zapsat Squash (Thunderstruck) – plody s touto variantou už nezadržuji`.
+  Úspěšný zápis počítadlo varianty smaže.
+- Když deník chybí (`journal` se nenačetl nebo ho hra přejmenovala), zápis se
+  přeskočí a nic se nezadrží.
 - Bez spojení (`sendCommand` vrátí false) se zápis přeruší, stav „Není spojení se
   hrou“, pokus se nepočítá.
 - Zadržení platí jen v kole, ve kterém zápis opravdu běžel. Když je `journalOn`
@@ -85,9 +88,9 @@ Rozhodnutí z brainstormingu:
 - `missingVariants`: prázdný deník, částečně zapsaný druh, vše zapsáno → `[]`.
 - `pickLogTargets`: jen zralé, limit `max`, jeden plod na stejnou chybějící
   variantu druhu.
-- Ochrana: plod s chybějící variantou je zadržen; po 3 neúspěších uvolněn; nový
-  plod na stejném políčku (jiný `endTime`) začíná od nuly; s `journalOn = false`
-  nic nezadržuje.
+- Ochrana: plod s chybějící variantou je zadržen; po 3 neúspěších varianty jsou
+  uvolněny všechny její plody; plod s jinou chybějící variantou zůstává zadržen;
+  bez deníku a s `journalOn = false` nic nezadržuje.
 
 ## Mimo rozsah
 
