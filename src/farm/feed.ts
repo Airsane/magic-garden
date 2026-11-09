@@ -14,6 +14,7 @@ import { renderLive, state } from "../state";
 import { allTime, countHarvest, saveAll, session } from "../stats";
 import { prettyName } from "../util/format";
 import { sleep, uuid } from "../util/misc";
+import { isHeldForJournal } from "./journal";
 
 /** Max. počet krmení jednoho mazlíčka za kolo. */
 const MAX_FEEDS_PER_PET = 6;
@@ -46,7 +47,7 @@ function pickGardenFood(pet: Pet, game: GameSnapshot, used: Set<string>): Crop |
   const diet = allowedDiet(pet);
   const t = Date.now();
   const list = allSlots(game.tiles).filter((c) =>
-    isRipe(c, t) && diet.has(c.species) && !c.preserved && !used.has(cropKey(c)) &&
+    isRipe(c, t) && diet.has(c.species) && !c.preserved && !used.has(cropKey(c)) && !isHeldForJournal(c) &&
     (S.feedMutated || !c.mutations.length));
   list.sort((a, b) => a.mutations.length - b.mutations.length || a.size - b.size);
   return list[0] || null;

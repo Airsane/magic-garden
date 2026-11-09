@@ -1,4 +1,4 @@
-// Hlavní smyčka: jedno kolo = sklizeň → krmení → (prodej) → sázení.
+// Hlavní smyčka: jedno kolo = zápis do sbírky → sklizeň → krmení → (prodej) → nákup → sázení.
 
 import { S } from "../config";
 import { readGame } from "../game/reader";
@@ -10,6 +10,7 @@ import { sleep } from "../util/misc";
 import { doBuy } from "./buy";
 import { doFeed } from "./feed";
 import { doHarvest } from "./harvest";
+import { clearJournalHold, doLogCrops } from "./journal";
 import { doPlant } from "./plant";
 
 export interface CycleOptions {
@@ -31,8 +32,14 @@ export async function cycle({ force = false, harvest = true, plant = true, feed 
   try {
     let game = await readGame();
     if (!game.tiles) { state.status = "Čekám na zahradu…"; return; }
-    let h = 0, p = 0, f = 0, b = 0;
-    if (harvest) h = await doHarvest(game, force);
+    clearJournalHold();
+    let l = 0, h = 0, p = 0, f = 0, b = 0;
+    if (harvest) {
+      // zápis před sklizní, ať se plod s novou variantou nesklidí nezapsaný
+      l = await doLogCrops(game, force);
+      if (l) game = await readGame();
+      h = await doHarvest(game, force);
+    }
     // krmení před prodejem, ať mazlíčkům zůstane jídlo
     if (feed) {
       if (h) game = await readGame();
@@ -51,8 +58,8 @@ export async function cycle({ force = false, harvest = true, plant = true, feed 
       if (h || f || b) game = await readGame();
       p = await doPlant(game, force);
     }
-    if (h || p || f || b) session.cycles++;
-    state.status = h || p || f || b ? `Hotovo: ${h} sklizeno, ${f} nakrmeno, ${b} koupeno, ${p} zasazeno` : "Nic k práci";
+    if (l || h || p || f || b) session.cycles++;
+    state.status = l || h || p || f || b ? `Hotovo: ${l ? `${l} zapsáno, ` : ""}${h} sklizeno, ${f} nakrmeno, ${b} koupeno, ${p} zasazeno` : "Nic k práci";
   } catch (e) {
     console.error("[AutoFarm]", e);
     state.status = "Chyba – viz konzole (F12)";

@@ -10,6 +10,7 @@ vi.mock("../src/farm/buy", () => ({ doBuy: vi.fn(async () => 0) }));
 vi.mock("../src/farm/feed", () => ({ doFeed: vi.fn(async () => 0) }));
 vi.mock("../src/farm/harvest", () => ({ doHarvest: vi.fn(async () => 0) }));
 vi.mock("../src/farm/plant", () => ({ doPlant: vi.fn(async () => 0) }));
+vi.mock("../src/farm/journal", () => ({ doLogCrops: vi.fn(async () => 0), clearJournalHold: vi.fn(), isHeldForJournal: vi.fn(() => false) }));
 
 const { S } = await import("../src/config");
 const { doBuy } = await import("../src/farm/buy");
