@@ -62,7 +62,8 @@ git push origin main v2.6.0
 
 Workflow ověří, že tag odpovídá verzi v `package.json`, spustí kontroly a testy (`./build.sh`)
 a vytvoří release s `mg-autoharvest.user.js` a `mg-autoharvest.meta.js`. Hráčům se nová verze
-stáhne sama. Kontroly a testy běží i při každém pushi (`.github/workflows/ci.yml`).
+stáhne sama. Když se release po tagu nespustí, spusť ho ručně: *Actions → Release →
+Run workflow* a zadej tag (např. `v2.5.0`). Kontroly a testy běží i při každém pushi (`.github/workflows/ci.yml`).
 Verze z `package.json` se propíše do hlavičky i do logu v konzoli; ostatní metadata hlavičky
 (`@match`, `@updateURL`…) jsou v [`scripts/meta.mjs`](scripts/meta.mjs).
 

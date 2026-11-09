@@ -6,6 +6,15 @@ name: Release
 on:
   push:
     tags: ["v*"]
+  # Ruční spuštění pro existující tag (Actions → Release → Run workflow).
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag k vydání, např. v2.5.0"
+        required: true
+
+env:
+  TAG: ${{ inputs.tag || github.ref_name }}
 
 permissions:
   contents: write
@@ -15,6 +24,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ env.TAG }}
 
       - uses: actions/setup-node@v4
         with:
@@ -24,8 +35,8 @@ jobs:
       - name: Tag odpovídá verzi v package.json
         run: |
           v=$(node -p "require('./package.json').version")
-          if [ "v$v" != "$GITHUB_REF_NAME" ]; then
-            echo "::error::Tag $GITHUB_REF_NAME neodpovídá verzi v package.json ($v)"
+          if [ "v$v" != "$TAG" ]; then
+            echo "::error::Tag $TAG neodpovídá verzi v package.json ($v)"
             exit 1
           fi
 
@@ -36,6 +47,7 @@ jobs:
 
       - uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ env.TAG }}
           generate_release_notes: true
           files: |
             dist/mg-autoharvest.user.js
