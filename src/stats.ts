@@ -24,6 +24,8 @@ export interface Session {
   /** koupených semínek a mincí za ně */
   seedsBought: number;
   seedCoins: number;
+  /** nové varianty zapsané do sbírky */
+  logged: number;
   coinsStart: number | null;
   coinsNow: number | null;
   coinsPeak: number | null;
@@ -39,6 +41,8 @@ export interface AllTime {
   species: Record<string, number>;
   since: number;
   bestPerHour: number;
+  /** nové varianty zapsané do sbírky */
+  logged: number;
 }
 
 const KEY_ALL = "mg-autofarm-alltime";
@@ -49,13 +53,13 @@ const newSession = (): Session => ({
   failedHarvest: 0, failedPlant: 0, failedFeed: 0, fedPets: {},
   cycles: 0, sells: 0, disconnects: 0,
   species: {}, plantedSpecies: {},
-  seedsBought: 0, seedCoins: 0,
+  seedsBought: 0, seedCoins: 0, logged: 0,
   coinsStart: null, coinsNow: null, coinsPeak: null,
   coinHistory: [],
 });
 
 const newAllTime = (): AllTime => ({
-  harvested: 0, mutated: 0, planted: 0, fed: 0, species: {}, since: Date.now(), bestPerHour: 0,
+  harvested: 0, mutated: 0, planted: 0, fed: 0, species: {}, since: Date.now(), bestPerHour: 0, logged: 0,
 });
 
 export let session: Session = newSession();

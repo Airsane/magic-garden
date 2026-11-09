@@ -11,6 +11,10 @@ export const cmdHarvest = (tile: number, slotsIndex: number, cropItemId: string 
 export const cmdPlant = (tile: number, species: string) =>
   sendCommand({ type: "PlantSeed", slot: tile, species });
 
+/** Zapíše plod na poli do sbírky (deníku). */
+export const cmdLogItem = (tile: number, slotsIndex: number) =>
+  sendCommand({ type: "LogItem", target: { kind: "growSlot", slot: tile, slotsIndex } });
+
 export const cmdSellAll = () => sendCommand({ type: "SellAllCrops" });
 
 /** Koupí semínka v obchodě místnosti (viewMode podle nastavení obchodu ve hře). */

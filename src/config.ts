@@ -20,6 +20,9 @@ export interface Settings {
   /** druhy, které se nesklízí */
   excludeSpecies: string[];
   sellAfter: boolean;
+  // sbírka (deník)
+  /** před sklizní zapsat do sbírky plody s chybějící variantou */
+  journalOn: boolean;
   // sázení
   plantOn: boolean;
   plantMode: PlantMode;
@@ -77,6 +80,7 @@ export const DEFAULTS: Settings = {
   onlyMutated: false,
   excludeSpecies: [],
   sellAfter: false,
+  journalOn: true,
   plantOn: false,
   plantMode: "priority",
   plantOrder: [],

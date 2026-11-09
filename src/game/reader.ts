@@ -5,6 +5,7 @@ import { readPets, type Pet } from "./pets";
 import { clampPlayers } from "./pricing";
 import { seedOffers, type SeedOffer } from "./shop";
 import type { Tiles } from "./garden";
+import type { Journal } from "./journal";
 
 /** Plodina v batohu. */
 export interface CropItem {
@@ -32,12 +33,15 @@ export interface GameSnapshot {
   players: number;
   /** semínka skladem v obchodě (aktuální restock) */
   seedOffers: SeedOffer[];
+  /** sbírka (deník) hráče */
+  journal: Journal | null;
 }
 
 interface MyData {
   coinsCount?: number;
   coins?: number;
   garden?: { tileObjects?: Tiles };
+  journal?: Journal;
 }
 interface RawSeed { species?: string; quantity?: number }
 interface DirtTile { userSlotIdx?: number; dirtTileIdx?: number }
@@ -94,5 +98,6 @@ export async function readGame(): Promise<GameSnapshot> {
     pets: readPets(Array.isArray(petsA) ? petsA : petsB),
     players: clampPlayers(players),
     seedOffers: seedOffers(roomState, mySlot),
+    journal: data?.journal || null,
   };
 }
