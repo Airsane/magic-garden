@@ -42,8 +42,8 @@ jobs:
 
       - run: npm ci --no-audit --no-fund
 
-      - name: Kontroly, testy a build
-        run: ./build.sh
+      - name: Kontroly, testy a build (zmenšený)
+        run: ./build.sh --minify
 
       - uses: softprops/action-gh-release@v2
         with:
